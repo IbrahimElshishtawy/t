@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1023201199148",
+    "project_id": "tolab-fci",
+    "storage_bucket": "tolab-fci.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023201199148:android:886cd34d3c86cf1d1c3d89",
+        "android_client_info": {
+          "package_name": "com.example.tolab_fci"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv36_pKEvfOaDGzzXteZvwMUagZYDPa_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
