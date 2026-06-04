@@ -75,10 +75,6 @@ class ApiClient {
   final Dio _dio;
   final SecureStorageService _secureStorage;
   static const int _maxRetryAttempts = 2;
-  static const String _demoAccessTokenPrefix = 'demo-access-token';
-  static const String _demoRefreshTokenPrefix = 'demo-refresh-token';
-  static const String _mockAccessTokenPrefix = 'mock-access-';
-  static const String _mockRefreshTokenPrefix = 'mock-refresh-';
   static const Duration _missingRouteCooldown = Duration(seconds: 30);
   final Map<String, DateTime> _missingRoutes = <String, DateTime>{};
   Future<void> Function(String message)? _unauthorizedHandler;

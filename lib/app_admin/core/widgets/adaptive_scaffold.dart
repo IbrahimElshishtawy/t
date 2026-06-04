@@ -489,33 +489,36 @@ class _SidebarNavTileState extends State<_SidebarNavTile> {
               );
             }
 
-            return ListTile(
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 2,
-              ),
-              onTap: widget.onTap,
-              leading: Icon(
-                widget.item.icon,
-                color: isSelected
-                    ? AppColors.primary
-                    : Theme.of(context).iconTheme.color,
-              ),
-              title: Text(context.l10n.byValue(widget.item.label)),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (widget.badgeCount > 0)
-                    _NotificationCountBadge(count: widget.badgeCount),
-                  const SizedBox(width: AppSpacing.xs),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    size: 18,
-                    color: isSelected
-                        ? AppColors.primary
-                        : Theme.of(context).textTheme.bodySmall?.color,
-                  ),
-                ],
+            return Material(
+              color: Colors.transparent,
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 2,
+                ),
+                onTap: widget.onTap,
+                leading: Icon(
+                  widget.item.icon,
+                  color: isSelected
+                      ? AppColors.primary
+                      : Theme.of(context).iconTheme.color,
+                ),
+                title: Text(context.l10n.byValue(widget.item.label)),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.badgeCount > 0)
+                      _NotificationCountBadge(count: widget.badgeCount),
+                    const SizedBox(width: AppSpacing.xs),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      size: 18,
+                      color: isSelected
+                          ? AppColors.primary
+                          : Theme.of(context).textTheme.bodySmall?.color,
+                    ),
+                  ],
+                ),
               ),
             );
           },
