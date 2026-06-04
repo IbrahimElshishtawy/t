@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:go_router/go_router.dart';
@@ -17,20 +16,22 @@ import '../../../../shared/dialogs/app_confirm_dialog.dart';
 import '../../../../state/app_state.dart';
 import '../../models/course_offering_model.dart';
 import '../../state/course_offerings_actions.dart';
-import '../../state/course_offerings_selectors.dart';
+import '../models/course_offerings_view_model.dart';
 import '../widgets/offering_card.dart';
 import '../widgets/offering_filters.dart';
 import '../widgets/offering_form.dart';
 import '../widgets/offering_table.dart';
+import '../widgets/offering_summary_card.dart';
+import '../widgets/academic_delivery_panel.dart';
 
 class CourseOfferingsPage extends StatelessWidget {
   const CourseOfferingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _CourseOfferingsViewModel>(
+    return StoreConnector<AppState, CourseOfferingsViewModel>(
       onInit: (store) => store.dispatch(const FetchCourseOfferingsAction()),
-      converter: (store) => _CourseOfferingsViewModel.fromStore(store),
+      converter: (store) => CourseOfferingsViewModel.fromStore(store),
       distinct: true,
       onDidChange: (previous, current) {
         if (current.feedbackMessage != null &&
@@ -80,23 +81,23 @@ class CourseOfferingsPage extends StatelessWidget {
                       spacing: AppSpacing.md,
                       runSpacing: AppSpacing.md,
                       children: [
-                        _SummaryCard(
+                        OfferingSummaryCard(
                           label: 'Filtered offerings',
                           value: '${vm.metrics.total}',
                           accent: AppColors.primary,
                         ),
-                        _SummaryCard(
+                        OfferingSummaryCard(
                           label: 'Active offerings',
                           value: '${vm.metrics.active}',
                           accent: AppColors.secondary,
                         ),
-                        _SummaryCard(
+                        OfferingSummaryCard(
                           label: 'Average fill rate',
                           value:
                               '${(vm.metrics.averageFillRate * 100).round()}%',
                           accent: AppColors.warning,
                         ),
-                        _SummaryCard(
+                        OfferingSummaryCard(
                           label: 'Seats remaining',
                           value: '${vm.metrics.totalSeatsRemaining}',
                           accent: AppColors.info,
@@ -104,7 +105,7 @@ class CourseOfferingsPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: AppSpacing.lg),
-                    _AcademicDeliveryPanel(offerings: vm.visibleOfferings),
+                    AcademicDeliveryPanel(offerings: vm.visibleOfferings),
                     const SizedBox(height: AppSpacing.md),
                     OfferingFilters(
                       filters: vm.filters,
@@ -351,226 +352,4 @@ class CourseOfferingsPage extends StatelessWidget {
     if (!confirmed || !context.mounted) return;
     store.dispatch(DeleteCourseOfferingAction(offeringId: offering.id));
   }
-}
-
-class _AcademicDeliveryPanel extends StatelessWidget {
-  const _AcademicDeliveryPanel({required this.offerings});
-
-  final List<CourseOfferingModel> offerings;
-
-  @override
-  Widget build(BuildContext context) {
-    final active = offerings
-        .where((item) => item.status == CourseOfferingStatus.active)
-        .length;
-    final highDemand = offerings.where((item) => item.fillRate >= 0.85).length;
-    final departments = offerings.map((item) => item.departmentName).toSet();
-    final academicYears = offerings.map((item) => item.academicYear).toSet();
-
-    return AppCard(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Academic delivery snapshot',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            'A cleaner split for active delivery, demand pressure, and academic coverage across the current offerings view.',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            children: [
-              _InsightChip(
-                label: '$active active now',
-                color: AppColors.secondary,
-              ),
-              _InsightChip(
-                label: '$highDemand high-demand sections',
-                color: AppColors.warning,
-              ),
-              _InsightChip(
-                label: '${departments.length} departments',
-                color: AppColors.info,
-              ),
-              _InsightChip(
-                label: academicYears.isEmpty
-                    ? 'No academic year data'
-                    : academicYears.join(' • '),
-                color: AppColors.primary,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({
-    required this.label,
-    required this.value,
-    required this.accent,
-  });
-
-  final String label;
-  final String value;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 196,
-      child: AppCard(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 10,
-              width: 56,
-              decoration: BoxDecoration(
-                color: accent,
-                borderRadius: BorderRadius.circular(999),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(label, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: AppSpacing.xs),
-            Text(value, style: Theme.of(context).textTheme.headlineSmall),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _InsightChip extends StatelessWidget {
-  const _InsightChip({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: color.withValues(alpha: 0.18)),
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.labelMedium?.copyWith(color: color),
-      ),
-    );
-  }
-}
-
-class _CourseOfferingsViewModel {
-  const _CourseOfferingsViewModel({
-    required this.store,
-    required this.status,
-    required this.mutationStatus,
-    required this.filters,
-    required this.pagination,
-    required this.visibleOfferings,
-    required this.filteredCount,
-    required this.totalPages,
-    required this.semesterOptions,
-    required this.departments,
-    required this.metrics,
-    this.errorMessage,
-    this.feedbackMessage,
-  });
-
-  final Store<AppState> store;
-  final LoadStatus status;
-  final LoadStatus mutationStatus;
-  final CourseOfferingsFilters filters;
-  final CourseOfferingsPagination pagination;
-  final List<CourseOfferingModel> visibleOfferings;
-  final int filteredCount;
-  final int totalPages;
-  final List<String> semesterOptions;
-  final List<CourseOfferingLookupOption> departments;
-  final CourseOfferingsDashboardMetrics metrics;
-  final String? errorMessage;
-  final String? feedbackMessage;
-
-  int get page => pagination.page;
-
-  factory _CourseOfferingsViewModel.fromStore(Store<AppState> store) {
-    final state = store.state.courseOfferingsState;
-    final totalPages = selectFilteredTotalPages(state);
-    final nextPage = state.pagination.page > totalPages
-        ? totalPages
-        : state.pagination.page;
-    final pagination = state.pagination.copyWith(
-      page: nextPage,
-      totalPages: totalPages,
-    );
-    return _CourseOfferingsViewModel(
-      store: store,
-      status: state.status,
-      mutationStatus: state.mutationStatus,
-      filters: state.filters,
-      pagination: pagination,
-      visibleOfferings: selectVisibleOfferings(
-        state.copyWith(pagination: pagination),
-      ),
-      filteredCount: selectFilteredOfferings(state).length,
-      totalPages: totalPages,
-      semesterOptions: selectSemesterOptions(state),
-      departments: state.departments,
-      metrics: selectCourseOfferingsMetrics(state),
-      errorMessage: state.errorMessage,
-      feedbackMessage: state.feedbackMessage,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _CourseOfferingsViewModel &&
-        other.status == status &&
-        other.mutationStatus == mutationStatus &&
-        other.filters.searchQuery == filters.searchQuery &&
-        other.filters.semester == filters.semester &&
-        other.filters.departmentId == filters.departmentId &&
-        other.filters.status == filters.status &&
-        other.page == page &&
-        other.totalPages == totalPages &&
-        other.filteredCount == filteredCount &&
-        other.errorMessage == errorMessage &&
-        other.feedbackMessage == feedbackMessage &&
-        listEquals(
-          other.visibleOfferings.map((item) => item.id).toList(),
-          visibleOfferings.map((item) => item.id).toList(),
-        );
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    status,
-    mutationStatus,
-    filters.searchQuery,
-    filters.semester,
-    filters.departmentId,
-    filters.status,
-    page,
-    totalPages,
-    filteredCount,
-    errorMessage,
-    feedbackMessage,
-  );
 }
