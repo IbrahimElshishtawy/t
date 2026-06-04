@@ -225,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   border: Border.all(color: AppColors.strokeLight),
                 ),
                 child: Material(
-                  type: MaterialType.translucent,
+                  type: MaterialType.transparency,
                   child: CheckboxListTile(
                     value: _rememberSession,
                     onChanged: isLoading

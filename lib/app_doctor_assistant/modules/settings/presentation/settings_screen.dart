@@ -11,6 +11,7 @@ import '../../../presentation/widgets/doctor_assistant_widgets.dart';
 import '../../../presentation/widgets/workspace/faculty_quick_actions_bar.dart';
 import '../../../state/app_state.dart';
 import '../../auth/state/session_selectors.dart';
+import '../../../../app/core/app_scope.dart';
 import '../state/settings_actions.dart';
 import 'models/settings_workspace_models.dart';
 import 'widgets/academic_controls_section.dart';
@@ -246,6 +247,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     'final': draft.finalWeight.round(),
                                   },
                                 });
+                                AppScope.locale(context).setLanguage(draft.languageCode);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Settings validated and saved for the current workspace session.')),
                                 );

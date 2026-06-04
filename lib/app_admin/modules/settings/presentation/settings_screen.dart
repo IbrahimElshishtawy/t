@@ -10,6 +10,7 @@ import '../../../state/app_state.dart';
 import '../models/settings_models.dart';
 import '../state/settings_actions.dart';
 import '../state/settings_state.dart';
+import '../../../../app/core/app_scope.dart';
 import '../widgets/settings_primitives.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -48,17 +49,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
         notificationStatus:
             store.state.notificationsState.connectionStatus.label,
       ),
-      onDidChange: (_, current) {
+      onDidChange: (previous, current) {
         if (!mounted) return;
         final messenger = ScaffoldMessenger.of(context);
         final state = current.settingsState;
-        if (state.saveStatus == LoadStatus.success &&
-            state.successMessage != null) {
-          messenger
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(state.successMessage!)));
+        final wasSaving = previous?.settingsState.saveStatus == LoadStatus.loading;
+        if (state.saveStatus == LoadStatus.success && wasSaving) {
+          final languageCode = state.bundle.general.languageCode;
+          AppScope.locale(context).setLanguage(languageCode);
+          if (state.successMessage != null) {
+            messenger
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text(state.successMessage!)));
+          }
         } else if (state.saveStatus == LoadStatus.failure &&
-            state.errorMessage != null) {
+            state.errorMessage != null &&
+            wasSaving) {
           messenger
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(content: Text(state.errorMessage!)));
