@@ -1,19 +1,12 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import '../../../core/animations/app_motion.dart';
-import '../../../core/colors/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/responsive/app_breakpoints.dart';
 import '../../../core/spacing/app_spacing.dart';
-import '../../../core/widgets/app_card.dart';
 import '../../../shared/models/schedule_models.dart';
-import '../../../shared/widgets/premium_button.dart';
-import '../../../shared/widgets/status_badge.dart';
 import '../models/section_management_models.dart';
 import 'design/section_management_tokens.dart';
-import 'widgets/section_management_primitives.dart';
 import 'widgets/section_overview_tab.dart';
 import 'widgets/section_schedule_tab.dart';
 import 'widgets/section_staff_tab.dart';
@@ -68,7 +61,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
           Positioned(
             top: -120,
             right: -80,
-            child: _BackdropOrb(
+            child: SectionBackdropOrb(
               size: 280,
               color: SectionManagementPalette.orbPrimary(context),
             ),
@@ -76,7 +69,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
           Positioned(
             top: 280,
             left: -100,
-            child: _BackdropOrb(
+            child: SectionBackdropOrb(
               size: 240,
               color: SectionManagementPalette.orbSuccess(context),
             ),
@@ -84,7 +77,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
           Positioned(
             bottom: -120,
             right: 160,
-            child: _BackdropOrb(
+            child: SectionBackdropOrb(
               size: 260,
               color: SectionManagementPalette.orbWarning(context),
             ),
@@ -109,11 +102,29 @@ class _SectionsScreenState extends State<SectionsScreen> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildHeroHeader(context, constraints.maxWidth < 900),
+                          SectionHeroHeader(
+                            record: _selectedRecord,
+                            compact: constraints.maxWidth < 900,
+                            onEdit: () => _showSnack(
+                              'Edit panel is ready for form wiring to the real section editor.',
+                            ),
+                            onDelete: () => _showSnack(
+                              'Delete action is intentionally mocked to protect the sample data.',
+                            ),
+                            onToggleActivation: _toggleSectionActivation,
+                          ),
                           const SizedBox(height: AppSpacing.lg),
-                          _buildPortfolioStrip(context),
+                          SectionPortfolioStrip(
+                            records: _records,
+                            selectedRecord: _selectedRecord,
+                            onSelectRecord: _selectRecord,
+                          ),
                           const SizedBox(height: AppSpacing.lg),
-                          _buildTabBar(),
+                          SectionTabBar(
+                            activeTab: _activeTab,
+                            onTabChanged: (tab) =>
+                                setState(() => _activeTab = tab),
+                          ),
                           const SizedBox(height: AppSpacing.lg),
                           if (showSidebarPreview)
                             Row(
@@ -142,299 +153,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
     );
   }
 
-  Widget _buildHeroHeader(BuildContext context, bool compact) {
-    final record = _selectedRecord;
-    final capacityColor = capacityBandColor(record.capacityBand);
-    final alertLabel = switch (record.capacityBand) {
-      SectionCapacityBand.available =>
-        '${record.availableSeats} seats available',
-      SectionCapacityBand.almostFull => 'Almost full, review incoming adds',
-      SectionCapacityBand.full => 'Section full, waitlist active',
-    };
 
-    return SectionGlassPanel(
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      child: compact
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeroIdentity(context),
-                const SizedBox(height: AppSpacing.lg),
-                _buildHeroCapacityCard(context, alertLabel, capacityColor),
-                const SizedBox(height: AppSpacing.lg),
-                _buildHeroActions(),
-              ],
-            )
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 7,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildHeroIdentity(context),
-                      const SizedBox(height: AppSpacing.lg),
-                      Wrap(
-                        spacing: AppSpacing.sm,
-                        runSpacing: AppSpacing.sm,
-                        children: [
-                          _InfoPill(
-                            icon: Icons.apartment_rounded,
-                            label: record.department,
-                          ),
-                          _InfoPill(
-                            icon: Icons.school_rounded,
-                            label: record.yearLabel,
-                          ),
-                          _InfoPill(
-                            icon: Icons.auto_stories_rounded,
-                            label: record.semesterLabel,
-                          ),
-                          _InfoPill(
-                            icon: Icons.place_outlined,
-                            label: record.locationLabel,
-                          ),
-                          _InfoPill(
-                            icon: Icons.sync_rounded,
-                            label: record.lastUpdatedLabel,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.xl),
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      _buildHeroActions(),
-                      const SizedBox(height: AppSpacing.lg),
-                      _buildHeroCapacityCard(
-                        context,
-                        alertLabel,
-                        capacityColor,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-    );
-  }
-
-  Widget _buildHeroIdentity(BuildContext context) {
-    final record = _selectedRecord;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Section Management',
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: AppColors.primary,
-                letterSpacing: 0.3,
-              ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        Wrap(
-          spacing: AppSpacing.sm,
-          runSpacing: AppSpacing.sm,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(record.name, style: Theme.of(context).textTheme.displayMedium),
-            _CodeBadge(code: record.code),
-            StatusBadge(record.status),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        Text(
-          record.description,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: SectionManagementPalette.subtleText(context),
-              ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHeroCapacityCard(
-    BuildContext context,
-    String alertLabel,
-    Color accentColor,
-  ) {
-    final record = _selectedRecord;
-    return AppCard(
-      backgroundColor: SectionManagementPalette.frostedSurface(context),
-      borderColor: accentColor.withValues(alpha: 0.20),
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                height: 44,
-                width: 44,
-                decoration: BoxDecoration(
-                  color: accentColor.withValues(alpha: 0.14),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Icon(Icons.people_alt_rounded, color: accentColor),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Capacity management',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      alertLabel,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(color: accentColor),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          SectionCapacityBar(
-            value: record.capacityUsage,
-            label:
-                '${record.studentsCount} filled of ${record.capacity} total seats',
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Row(
-            children: [
-              Expanded(
-                child: _MiniCapacityStat(
-                  label: 'Available',
-                  value: math.max(record.availableSeats, 0).toString(),
-                  color: AppColors.secondary,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: _MiniCapacityStat(
-                  label: 'Waitlist',
-                  value: record.waitlistCount.toString(),
-                  color: AppColors.warning,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: _MiniCapacityStat(
-                  label: 'Capacity %',
-                  value: '${record.capacityUsagePercent}%',
-                  color: accentColor,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeroActions() {
-    return Wrap(
-      spacing: AppSpacing.sm,
-      runSpacing: AppSpacing.sm,
-      alignment: WrapAlignment.end,
-      children: [
-        PremiumButton(
-          label: 'Edit',
-          icon: Icons.edit_outlined,
-          isSecondary: true,
-          onPressed: () => _showSnack(
-            'Edit panel is ready for form wiring to the real section editor.',
-          ),
-        ),
-        PremiumButton(
-          label: 'Delete',
-          icon: Icons.delete_outline_rounded,
-          isDestructive: true,
-          onPressed: () => _showSnack(
-            'Delete action is intentionally mocked to protect the sample data.',
-          ),
-        ),
-        PremiumButton(
-          label: _selectedRecord.isActive ? 'Deactivate' : 'Activate',
-          icon: _selectedRecord.isActive
-              ? Icons.pause_circle_outline_rounded
-              : Icons.play_circle_outline_rounded,
-          onPressed: _toggleSectionActivation,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPortfolioStrip(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionPanelHeader(
-          title: 'Section portfolio',
-          subtitle:
-              'Compare sibling cohorts, overloaded groups, and empty capacity before moving students.',
-          trailing: Text(
-            '${_records.length} active cohorts',
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        SizedBox(
-          height: 170,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: _records.length,
-            separatorBuilder: (context, index) =>
-                const SizedBox(width: AppSpacing.md),
-            itemBuilder: (context, index) {
-              final record = _records[index];
-              return SizedBox(
-                width: 290,
-                child: SectionPortfolioCard(
-                  record: record,
-                  selected: record.id == _selectedRecord.id,
-                  onTap: () => _selectRecord(record),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTabBar() {
-    return AppCard(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      backgroundColor: SectionManagementPalette.frostedSurface(
-        context,
-        lightAlpha: 0.72,
-      ),
-      child: Wrap(
-        spacing: AppSpacing.sm,
-        runSpacing: AppSpacing.sm,
-        children: [
-          for (final tab in SectionDetailTab.values)
-            SectionSegmentChip(
-              label: _tabLabel(tab),
-              selected: _activeTab == tab,
-              onTap: () => setState(() => _activeTab = tab),
-            ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildMainWorkspace(BuildContext context) {
     return AnimatedSwitcher(
@@ -656,132 +375,4 @@ class _SectionsScreenState extends State<SectionsScreen> {
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
-  String _tabLabel(SectionDetailTab tab) => switch (tab) {
-        SectionDetailTab.overview => 'Overview',
-        SectionDetailTab.students => 'Students',
-        SectionDetailTab.schedule => 'Schedule',
-        SectionDetailTab.subjects => 'Subjects',
-        SectionDetailTab.staff => 'Staff',
-      };
-}
-
-class _BackdropOrb extends StatelessWidget {
-  const _BackdropOrb({required this.size, required this.color});
-
-  final double size;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: Container(
-        height: size,
-        width: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: RadialGradient(colors: [color, color.withValues(alpha: 0)]),
-        ),
-      ),
-    );
-  }
-}
-
-class _CodeBadge extends StatelessWidget {
-  const _CodeBadge({required this.code});
-
-  final String code;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(AppConstants.pillRadius),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.16)),
-      ),
-      child: Text(
-        code,
-        style: Theme.of(
-          context,
-        ).textTheme.labelLarge?.copyWith(color: AppColors.primary),
-      ),
-    );
-  }
-}
-
-class _InfoPill extends StatelessWidget {
-  const _InfoPill({required this.icon, required this.label});
-
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
-      ),
-      decoration: BoxDecoration(
-        color: SectionManagementPalette.frostedSurface(
-          context,
-          lightAlpha: 0.72,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.pillRadius),
-        border: Border.all(color: Theme.of(context).dividerColor),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            size: 16,
-            color: SectionManagementPalette.subtleText(context),
-          ),
-          const SizedBox(width: AppSpacing.xs),
-          Text(label, style: Theme.of(context).textTheme.labelMedium),
-        ],
-      ),
-    );
-  }
-}
-
-class _MiniCapacityStat extends StatelessWidget {
-  const _MiniCapacityStat({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(AppConstants.mediumRadius),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: Theme.of(context).textTheme.bodySmall),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            value,
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(color: color),
-          ),
-        ],
-      ),
-    );
-  }
 }
