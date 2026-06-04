@@ -350,10 +350,10 @@ class _Sidebar extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const StatusBadge('Live', icon: Icons.bolt_rounded),
+                      StatusBadge(context.l10n.byValue('Live'), icon: Icons.bolt_rounded),
                       const SizedBox(height: AppSpacing.xs),
                       Text(
-                        notificationStatus,
+                        context.l10n.byValue(notificationStatus),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelMedium,
@@ -731,7 +731,7 @@ class _TopBar extends StatelessWidget {
                         children: [
                           if (showStatusBadge)
                             StatusBadge(
-                              notificationStatus,
+                              context.l10n.byValue(notificationStatus),
                               icon: Icons.radio_button_checked,
                             ),
                           LanguageToggleButton(
@@ -892,7 +892,7 @@ class _TopBar extends StatelessWidget {
                           const Icon(Icons.schedule_rounded, size: 16),
                           const SizedBox(width: AppSpacing.xs),
                           Text(
-                            notificationStatus,
+                            context.l10n.byValue(notificationStatus),
                             style: Theme.of(context).textTheme.labelLarge,
                           ),
                         ],

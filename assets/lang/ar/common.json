@@ -285,7 +285,18 @@
     "Day": "يوم",
     "Daily": "يومياً",
     "Weekly": "أسبوعياً",
-    "Monthly": "شهرياً"
+    "Monthly": "شهرياً",
+    "Connected": "متصل",
+    "Connecting": "جاري الاتصال",
+    "Disconnected": "قطع الاتصال",
+    "Last updated": "آخر تحديث",
+    "Theme": "المظهر",
+    "Name": "الاسم",
+    "Type": "النوع",
+    "Email": "البريد الإلكتروني",
+    "Reason": "السبب",
+    "Unable to load the admin dashboard.": "غير قادر على تحميل لوحة التحكم الإدارية.",
+    "Production-ready academy configuration for branding, security, realtime operations, backend integrations, and backup control.": "تكوين الأكاديمية الجاهز للإنتاج للهوية البصرية، والأمان، والعمليات الفورية، وتكاملات الخلفية، والتحكم في النسخ الاحتياطي."
   },
   "by_fragment": {
     " students": " طالب",
@@ -294,6 +305,9 @@
     " students on the current watchlist.": " طالباً في قائمة المتابعة الحالية.",
     " signals need review.": " مؤشرات تحتاج إلى مراجعة.",
     " delivery progress": " تقدم التنفيذ",
-    " pending": " قيد الانتظار"
+    " pending": " قيد الانتظار",
+    " active permissions": " صلاحيات نشطة",
+    " unread": " غير مقروء",
+    " is ready for the connected backend flow.": " جاهز للتكامل مع الخادم المتصل."
   }
 }
