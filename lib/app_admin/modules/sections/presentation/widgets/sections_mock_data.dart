@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../shared/models/schedule_models.dart';
 import '../../models/section_management_models.dart';
@@ -9,9 +8,6 @@ DateTime _startOfWeek(DateTime date) {
   final normalized = _dateOnly(date);
   return normalized.subtract(Duration(days: normalized.weekday - 1));
 }
-
-bool _isSameDay(DateTime a, DateTime b) =>
-    a.year == b.year && a.month == b.month && a.day == b.day;
 
 SectionStudentRecord _student({
   required String id,

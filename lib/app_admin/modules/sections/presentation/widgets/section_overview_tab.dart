@@ -5,8 +5,8 @@ import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/responsive/app_breakpoints.dart';
+import '../../../../shared/widgets/status_badge.dart';
 import '../../models/section_management_models.dart';
-import '../design/section_management_tokens.dart';
 import '../charts/section_analytics_charts.dart';
 import 'section_management_primitives.dart';
 

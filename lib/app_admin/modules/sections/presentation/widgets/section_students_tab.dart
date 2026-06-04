@@ -5,6 +5,8 @@ import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/responsive/app_breakpoints.dart';
+import '../../../../core/constants/app_constants.dart';
+import '../../../../core/animations/app_motion.dart';
 import '../../../../shared/widgets/premium_button.dart';
 import '../../../../shared/widgets/status_badge.dart';
 import '../../models/section_management_models.dart';

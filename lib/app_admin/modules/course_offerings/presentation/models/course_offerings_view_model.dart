@@ -4,7 +4,6 @@ import 'package:redux/redux.dart';
 import '../../../../shared/enums/load_status.dart';
 import '../../../../state/app_state.dart';
 import '../../models/course_offering_model.dart';
-import '../../state/course_offerings_actions.dart';
 import '../../state/course_offerings_selectors.dart';
 
 class CourseOfferingsViewModel {
