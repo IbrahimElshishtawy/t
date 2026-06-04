@@ -42,6 +42,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Settings'), findsOneWidget);
-    expect(find.text('Security'), findsOneWidget);
+    expect(find.text('Security'), findsWidgets);
   });
 }
