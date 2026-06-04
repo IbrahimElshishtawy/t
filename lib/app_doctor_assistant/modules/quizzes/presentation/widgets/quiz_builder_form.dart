@@ -369,7 +369,7 @@ class QuizBuilderFormState extends State<QuizBuilderForm> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: _questions.length,
               buildDefaultDragHandles: false,
-              onReorder: _reorderQuestions,
+              onReorderItem: _reorderQuestions,
               itemBuilder: (context, index) {
                 final question = _questions[index];
                 return Padding(
@@ -516,9 +516,6 @@ class QuizBuilderFormState extends State<QuizBuilderForm> {
   void _reorderQuestions(int oldIndex, int newIndex) {
     setState(() {
       final next = List<QuizBuilderQuestionDraft>.from(_questions);
-      if (newIndex > oldIndex) {
-        newIndex -= 1;
-      }
       final item = next.removeAt(oldIndex);
       next.insert(newIndex, item);
       _questions = next;
