@@ -610,18 +610,18 @@ class _ActivityDataSource extends DataTableSource {
     final row = _rows[index];
     return DataRow(
       cells: [
-        DataCell(_MiniChip(label: row.type.label, color: _toneColor(row.tone))),
+        DataCell(_MiniChip(label: _context.l10n.byValue(row.type.label), color: _toneColor(row.tone))),
         DataCell(
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(context.l10n.byValue(row.title), style: Theme.of(_context).textTheme.titleSmall),
+              Text(_context.l10n.byValue(row.title), style: Theme.of(_context).textTheme.titleSmall),
               const SizedBox(height: 4),
               SizedBox(
                 width: 240,
                 child: Text(
-                  context.l10n.byValue(row.subtitle),
+                  _context.l10n.byValue(row.subtitle),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(_context).textTheme.bodySmall,
@@ -630,11 +630,11 @@ class _ActivityDataSource extends DataTableSource {
             ],
           ),
         ),
-        DataCell(Text(context.l10n.byValue(row.actor))),
-        DataCell(Text(context.l10n.byValue(row.department))),
-        DataCell(Text(context.l10n.byValue(row.createdAtLabel))),
+        DataCell(Text(_context.l10n.byValue(row.actor))),
+        DataCell(Text(_context.l10n.byValue(row.department))),
+        DataCell(Text(_context.l10n.byValue(row.createdAtLabel))),
         DataCell(
-          _MiniChip(label: row.statusLabel, color: _toneColor(row.tone)),
+          _MiniChip(label: _context.l10n.byValue(row.statusLabel), color: _toneColor(row.tone)),
         ),
       ],
     );

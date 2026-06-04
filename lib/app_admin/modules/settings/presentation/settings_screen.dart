@@ -11,6 +11,7 @@ import '../models/settings_models.dart';
 import '../state/settings_actions.dart';
 import '../state/settings_state.dart';
 import '../../../../app/core/app_scope.dart';
+import '../../../../app/localization/app_localizations.dart';
 import '../widgets/settings_primitives.dart';
 
 class SettingsScreen extends StatefulWidget {
