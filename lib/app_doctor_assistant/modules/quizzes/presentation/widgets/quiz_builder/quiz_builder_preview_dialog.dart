@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../dashboard/presentation/theme/dashboard_theme_tokens.dart';
 import '../../../../../core/design/app_spacing.dart';
-import '../../models/quizzes_workspace_models.dart';
+import '../../models/quiz_builder_models.dart';
 
 class QuizBuilderPreviewDialog extends StatelessWidget {
   const QuizBuilderPreviewDialog({
