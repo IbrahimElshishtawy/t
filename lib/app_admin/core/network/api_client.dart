@@ -278,18 +278,11 @@ class ApiClient {
   }
 
   bool _hasUsableAccessToken(String? token) {
-    return token != null &&
-        token.isNotEmpty &&
-        !token.startsWith(_demoAccessTokenPrefix) &&
-        !token.startsWith(_mockAccessTokenPrefix);
+    return token != null && token.isNotEmpty;
   }
 
   bool _hasUsableRefreshToken(String? token) {
-    return token != null &&
-        token.isNotEmpty &&
-        token.length >= 32 &&
-        !token.startsWith(_demoRefreshTokenPrefix) &&
-        !token.startsWith(_mockRefreshTokenPrefix);
+    return token != null && token.isNotEmpty;
   }
 
   Future<bool> _canAttemptTokenRefresh() async {

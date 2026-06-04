@@ -235,9 +235,8 @@ class UnifiedAuthRepository {
   }
 
   bool _shouldPersistToAdminStorage(AuthSession session) {
-    return !session.isLocalSession &&
-        (session.source == 'admin_portal' ||
-            session.source == 'legacy_admin_portal');
+    return session.source == 'admin_portal' ||
+        session.source == 'legacy_admin_portal';
   }
 
   bool _shouldPersistToDoctorStorage(AuthSession session) {
