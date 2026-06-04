@@ -21,6 +21,9 @@ import 'widgets/section_students_tab.dart';
 import 'widgets/section_subjects_tab.dart';
 import 'widgets/section_desktop_sidebar.dart';
 import 'widgets/sections_mock_data.dart';
+import 'widgets/section_hero_header.dart';
+import 'widgets/section_portfolio_strip.dart';
+import 'widgets/section_tab_bar.dart';
 
 class SectionsScreen extends StatefulWidget {
   const SectionsScreen({super.key});
