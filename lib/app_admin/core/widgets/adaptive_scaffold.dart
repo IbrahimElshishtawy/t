@@ -90,7 +90,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
     final screenType = AppBreakpoints.resolve(context);
     final selectedIndex = _selectedIndex();
     final selected = widget.destinations[selectedIndex];
-    final selectedLabel = context.l10n.t(selected.label);
+    final selectedLabel = context.l10n.byValue(selected.label);
     final isMobile = screenType == DeviceScreenType.mobile;
     final sidebarWidth = _isSidebarCollapsed
         ? AppConstants.collapsedSidebarWidth
@@ -229,25 +229,25 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
 
   String _subtitleFor(BuildContext context, String titleKey) =>
       switch (titleKey) {
-        'layout.admin.nav.dashboard' => context.l10n.t(
+        'Dashboard' => context.l10n.t(
           'layout.admin.subtitle.dashboard',
         ),
-        'layout.admin.nav.students' => context.l10n.t(
+        'Students' => context.l10n.t(
           'layout.admin.subtitle.students',
         ),
-        'layout.admin.nav.staff' => context.l10n.t(
+        'Staff' => context.l10n.t(
           'layout.admin.subtitle.staff',
         ),
-        'layout.admin.nav.departments' => context.l10n.t(
+        'Departments' => context.l10n.t(
           'layout.admin.subtitle.departments',
         ),
-        'layout.admin.nav.schedule' => context.l10n.t(
+        'Schedule' => context.l10n.t(
           'layout.admin.subtitle.schedule',
         ),
-        'layout.admin.nav.moderation' => context.l10n.t(
+        'Moderation' => context.l10n.t(
           'layout.admin.subtitle.moderation',
         ),
-        'layout.admin.nav.settings' => context.l10n.t(
+        'Settings' => context.l10n.t(
           'layout.admin.subtitle.settings',
         ),
         _ => context.l10n.t('layout.admin.subtitle.default'),
@@ -482,7 +482,7 @@ class _SidebarNavTileState extends State<_SidebarNavTile> {
             if (!showExpandedTile) {
               return _CompactSidebarNavTile(
                 icon: widget.item.icon,
-                label: context.l10n.t(widget.item.label),
+                label: context.l10n.byValue(widget.item.label),
                 isSelected: isSelected,
                 badgeCount: widget.badgeCount,
                 onTap: widget.onTap,
@@ -501,7 +501,7 @@ class _SidebarNavTileState extends State<_SidebarNavTile> {
                     ? AppColors.primary
                     : Theme.of(context).iconTheme.color,
               ),
-              title: Text(context.l10n.t(widget.item.label)),
+              title: Text(context.l10n.byValue(widget.item.label)),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
