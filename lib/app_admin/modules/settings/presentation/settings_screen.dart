@@ -60,14 +60,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           if (state.successMessage != null) {
             messenger
               ..hideCurrentSnackBar()
-              ..showSnackBar(SnackBar(content: Text(state.successMessage!)));
+              ..showSnackBar(SnackBar(content: Text(context.l10n.byValue(state.successMessage!))));
           }
         } else if (state.saveStatus == LoadStatus.failure &&
             state.errorMessage != null &&
             wasSaving) {
           messenger
             ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(state.errorMessage!)));
+            ..showSnackBar(SnackBar(content: Text(context.l10n.byValue(state.errorMessage!))));
         }
       },
       builder: (context, vm) {
@@ -90,9 +90,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
               icon: const Icon(Icons.backup_rounded),
               label: Text(
-                state.saveStatus == LoadStatus.loading
-                    ? 'Working...'
-                    : 'Create Backup',
+                context.l10n.byValue(
+                  state.saveStatus == LoadStatus.loading
+                      ? 'Working...'
+                      : 'Create Backup',
+                ),
               ),
             ),
             OutlinedButton.icon(
@@ -101,7 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         _dispatch(context, const RevertSettingsChangesAction())
                   : null,
               icon: const Icon(Icons.undo_rounded),
-              label: const Text('Revert'),
+              label: Text(context.l10n.byValue('Revert')),
             ),
             FilledButton.icon(
               onPressed: state.hasPendingChanges && !isBusy
@@ -109,7 +111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         _dispatch(context, const SaveSettingsRequestedAction())
                   : null,
               icon: const Icon(Icons.save_rounded),
-              label: const Text('Save Changes'),
+              label: Text(context.l10n.byValue('Save Changes')),
             ),
           ],
         );
@@ -148,22 +150,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
-                bundle.general.appName,
+                context.l10n.byValue(bundle.general.appName),
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: AppSpacing.xs),
               Wrap(
                 spacing: AppSpacing.sm,
                 runSpacing: AppSpacing.sm,
-                children: const [
-                  Chip(label: Text('Security')),
-                  Chip(label: Text('Notifications')),
-                  Chip(label: Text('Backup')),
+                children: [
+                  Chip(label: Text(context.l10n.byValue('Security'))),
+                  Chip(label: Text(context.l10n.byValue('Notifications'))),
+                  Chip(label: Text(context.l10n.byValue('Backup'))),
                 ],
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                'Last updated ${_formatDateTime(bundle.updatedAt)} | Theme ${bundle.themeMode.name} | ${bundle.general.timezone}',
+                '${context.l10n.byValue('Last updated')} ${_formatDateTime(bundle.updatedAt)} | ${context.l10n.byValue('Theme')} ${context.l10n.byValue(bundle.themeMode.name)} | ${bundle.general.timezone}',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -936,7 +938,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     trailing: FilledButton.icon(
                       onPressed: () => _addBlockedAccount(context, vm),
                       icon: const Icon(Icons.person_add_alt_rounded),
-                      label: const Text('Block Account'),
+                      label: Text(context.l10n.byValue('Block Account')),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.lg),
@@ -987,14 +989,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ],
                                         ),
                                       ),
-                                      child: const Text('Unblock'),
+                                      child: Text(context.l10n.byValue('Unblock')),
                                     ),
                                   ],
                                 ),
                                 Text(account.email),
                                 const SizedBox(height: AppSpacing.xs),
                                 Text(
-                                  '${account.reason} | ${_formatDateTime(account.blockedAt)}',
+                                  '${context.l10n.byValue(account.reason)} | ${_formatDateTime(account.blockedAt)}',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -1307,7 +1309,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 trailing: FilledButton.icon(
                   onPressed: () => _addHoliday(context, vm),
                   icon: const Icon(Icons.add_rounded),
-                  label: const Text('Add Holiday'),
+                  label: Text(context.l10n.byValue('Add Holiday')),
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -1345,7 +1347,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    holiday.type,
+                                    context.l10n.byValue(holiday.type),
                                     style: Theme.of(
                                       context,
                                     ).textTheme.bodySmall,
@@ -1651,7 +1653,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const CreateSettingsBackupRequestedAction(),
                   ),
                   icon: const Icon(Icons.backup_rounded),
-                  label: const Text('Run Backup'),
+                  label: Text(context.l10n.byValue('Run Backup')),
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -1682,14 +1684,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    snapshot.label,
+                                    context.l10n.byValue(snapshot.label),
                                     style: Theme.of(
                                       context,
                                     ).textTheme.titleMedium,
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    '${snapshot.sizeLabel} | ${snapshot.status} | ${snapshot.source}',
+                                    '${snapshot.sizeLabel} | ${context.l10n.byValue(snapshot.status)} | ${context.l10n.byValue(snapshot.source)}',
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
@@ -1710,7 +1712,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     )
                                   : null,
-                              child: const Text('Restore'),
+                              child: Text(context.l10n.byValue('Restore')),
                             ),
                           ],
                         ),
@@ -1802,29 +1804,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final saved = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add holiday'),
+        title: Text(context.l10n.byValue('Add holiday')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: context.l10n.byValue('Name')),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: typeController,
-              decoration: const InputDecoration(labelText: 'Type'),
+              decoration: InputDecoration(labelText: context.l10n.byValue('Type')),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.byValue('Cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Add'),
+            child: Text(context.l10n.byValue('Add')),
           ),
         ],
       ),
@@ -1913,41 +1915,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: const Text('Block account'),
+            title: Text(context.l10n.byValue('Block account')),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  decoration: InputDecoration(labelText: context.l10n.byValue('Name')),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  decoration: InputDecoration(labelText: context.l10n.byValue('Email')),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextField(
                   controller: reasonController,
-                  decoration: const InputDecoration(labelText: 'Reason'),
+                  decoration: InputDecoration(labelText: context.l10n.byValue('Reason')),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 SwitchListTile.adaptive(
                   value: isTemporary,
                   onChanged: (value) => setState(() => isTemporary = value),
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Temporary block'),
+                  title: Text(context.l10n.byValue('Temporary block')),
                 ),
               ],
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancel'),
+                child: Text(context.l10n.byValue('Cancel')),
               ),
               FilledButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('Block'),
+                child: Text(context.l10n.byValue('Block')),
               ),
             ],
           );
@@ -2004,9 +2006,9 @@ class _RoleEditorTile extends StatelessWidget {
       child: ExpansionTile(
         tilePadding: EdgeInsets.zero,
         childrenPadding: const EdgeInsets.only(bottom: AppSpacing.sm),
-        title: Text(role.name, style: Theme.of(context).textTheme.titleMedium),
+        title: Text(context.l10n.byValue(role.name), style: Theme.of(context).textTheme.titleMedium),
         subtitle: Text(
-          '${role.permissions.values.where((value) => value).length} active permissions',
+          context.l10n.byValue('${role.permissions.values.where((value) => value).length} active permissions'),
         ),
         children: [
           SwitchListTile.adaptive(
@@ -2014,14 +2016,14 @@ class _RoleEditorTile extends StatelessWidget {
             value: role.adminAccess,
             onChanged: (value) =>
                 onRoleChanged(role.copyWith(adminAccess: value)),
-            title: const Text('Admin access'),
+            title: Text(context.l10n.byValue('Admin access')),
           ),
           SwitchListTile.adaptive(
             contentPadding: EdgeInsets.zero,
             value: role.staffAccess,
             onChanged: (value) =>
                 onRoleChanged(role.copyWith(staffAccess: value)),
-            title: const Text('Staff access'),
+            title: Text(context.l10n.byValue('Staff access')),
           ),
           for (final entry in role.permissions.entries)
             SwitchListTile.adaptive(
@@ -2032,7 +2034,7 @@ class _RoleEditorTile extends StatelessWidget {
                   ..[entry.key] = value;
                 onRoleChanged(role.copyWith(permissions: nextPermissions));
               },
-              title: Text(entry.key.replaceAll('_', ' ')),
+              title: Text(context.l10n.byValue(entry.key.replaceAll('_', ' '))),
             ),
         ],
       ),
