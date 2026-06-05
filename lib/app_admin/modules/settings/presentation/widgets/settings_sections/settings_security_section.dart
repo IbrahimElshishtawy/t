@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../app/localization/app_localizations.dart';
-import '../../../../core/spacing/app_spacing.dart';
-import '../../models/settings_models.dart';
-import '../../presentation/settings_screen.dart';
-import '../settings_primitives.dart';
+import 'package:tolab_fci/app/localization/app_localizations.dart';
+import 'package:tolab_fci/app_admin/core/spacing/app_spacing.dart';
+import 'package:tolab_fci/app_admin/modules/settings/models/settings_models.dart';
+import 'package:tolab_fci/app_admin/modules/settings/presentation/settings_screen.dart';
+import 'package:tolab_fci/app_admin/modules/settings/presentation/widgets/settings_primitives.dart';
 
 class SettingsSecuritySection extends StatelessWidget {
   const SettingsSecuritySection({
