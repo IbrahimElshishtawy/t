@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tolab_fci/app_admin/core/spacing/app_spacing.dart';
 import 'package:tolab_fci/app_admin/modules/settings/models/settings_models.dart';
 import 'package:tolab_fci/app_admin/modules/settings/presentation/settings_screen.dart';
-import 'package:tolab_fci/app_admin/modules/settings/presentation/widgets/settings_primitives.dart';
+import 'package:tolab_fci/app_admin/modules/settings/widgets/settings_primitives.dart';
 
 class SettingsThemeSection extends StatelessWidget {
   const SettingsThemeSection({
