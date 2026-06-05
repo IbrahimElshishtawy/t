@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:tolab_fci/app_admin/core/colors/app_colors.dart';
 import 'package:tolab_fci/app_admin/core/spacing/app_spacing.dart';
 import 'package:tolab_fci/app_admin/core/widgets/app_card.dart';
-import 'package:tolab_fci/app_admin/modules/content_management/models/content_models.dart';
 import 'package:tolab_fci/app_admin/modules/content_management/state/content_selectors.dart';
 
 class ContentMetricsStrip extends StatelessWidget {
