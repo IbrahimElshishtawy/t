@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/colors/app_colors.dart';
-import '../../../../core/spacing/app_spacing.dart';
-import '../../../../core/widgets/app_card.dart';
-import '../../models/content_models.dart';
+import 'package:tolab_fci/app_admin/core/colors/app_colors.dart';
+import 'package:tolab_fci/app_admin/core/spacing/app_spacing.dart';
+import 'package:tolab_fci/app_admin/core/widgets/app_card.dart';
+import 'package:tolab_fci/app_admin/modules/content_management/models/content_models.dart';
 
 class ContentMetricsStrip extends StatelessWidget {
   const ContentMetricsStrip({super.key, required this.metrics});

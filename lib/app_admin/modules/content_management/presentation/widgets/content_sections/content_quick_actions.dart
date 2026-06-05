@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/spacing/app_spacing.dart';
-import '../../../../core/widgets/app_card.dart';
-import '../../../../shared/widgets/premium_button.dart';
+import 'package:tolab_fci/app_admin/core/spacing/app_spacing.dart';
+import 'package:tolab_fci/app_admin/core/widgets/app_card.dart';
+import 'package:tolab_fci/app_admin/shared/widgets/premium_button.dart';
 
 class ContentQuickActionsRow extends StatelessWidget {
   const ContentQuickActionsRow({
