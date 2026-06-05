@@ -4,6 +4,7 @@ import 'package:tolab_fci/app_admin/core/spacing/app_spacing.dart';
 import 'package:tolab_fci/app_admin/modules/settings/models/settings_models.dart';
 import 'package:tolab_fci/app_admin/modules/settings/presentation/settings_screen.dart';
 import 'package:tolab_fci/app_admin/modules/settings/widgets/settings_primitives.dart';
+import 'package:tolab_fci/app_admin/shared/models/notification_models.dart';
 
 class SettingsNotificationsSection extends StatelessWidget {
   const SettingsNotificationsSection({

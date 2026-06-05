@@ -296,7 +296,7 @@ class SettingsSecuritySection extends StatelessWidget {
 
     onUpdateBundle(
       (b) => b.copyWith(
-        security: security.copyWith(
+        security: b.security.copyWith(
           blockedAccounts: [
             account,
             ...b.security.blockedAccounts,

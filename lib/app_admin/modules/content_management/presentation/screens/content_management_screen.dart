@@ -5,10 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../../../../core/animations/app_motion.dart';
-import '../../../../core/colors/app_colors.dart';
 import '../../../../core/responsive/app_breakpoints.dart';
 import '../../../../core/spacing/app_spacing.dart';
-import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/page_header.dart';
 import '../../../../shared/enums/load_status.dart';
 import '../../../../shared/widgets/premium_button.dart';
@@ -22,7 +20,6 @@ import '../widgets/content_responsive_layout.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/filter_bar.dart';
 import '../widgets/loading_skeleton.dart';
-import '../widgets/status_badge.dart';
 import '../widgets/upload_widget.dart';
 import '../widgets/content_sections/content_metrics_strip.dart';
 import '../widgets/content_sections/content_quick_actions.dart';

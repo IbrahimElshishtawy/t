@@ -31,20 +31,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  static const List<String> _timezones = [
-    'Africa/Cairo',
-    'UTC',
-    'Europe/London',
-    'Asia/Riyadh',
-    'America/New_York',
-  ];
-
-  static const Map<String, String> _languages = {
-    'en': 'English',
-    'ar': 'Arabic',
-    'fr': 'French',
-  };
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, SettingsViewModel>(
@@ -349,8 +335,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     double width,
   ) {
     final state = vm.settingsState;
-    final onUpdate = (SettingsBundle Function(SettingsBundle) update) =>
-        _updateBundle(context, vm, update);
+    void onUpdate(SettingsBundle Function(SettingsBundle) update) {
+      _updateBundle(context, vm, update);
+    }
     return SingleChildScrollView(
       padding: const EdgeInsets.only(bottom: AppSpacing.xl),
       child: switch (state.selectedSection) {
