@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:tolab_fci/app/localization/app_localizations.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../shared/widgets/premium_button.dart';
