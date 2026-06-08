@@ -13,6 +13,7 @@ import '../../../../shared/enums/load_status.dart';
 import '../../../../shared/models/notification_models.dart';
 import '../../../../shared/widgets/premium_button.dart';
 import '../../../../state/app_state.dart';
+import '../../../../app/localization/app_localizations.dart';
 import '../../models/student_management_models.dart';
 import '../../state/students_state.dart';
 import '../../widgets/student_module_primitives.dart';
@@ -94,11 +95,14 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const PageHeader(
-                  title: 'Student Management Module',
-                  subtitle:
-                      'A unified admin workspace for student lifecycle operations.',
-                  breadcrumbs: ['Admin', 'Students'],
+                PageHeader(
+                  title: context.l10n.byValue('Student Management Module'),
+                  subtitle: context.l10n.byValue(
+                      'A unified admin workspace for student lifecycle operations.'),
+                  breadcrumbs: [
+                    context.l10n.byValue('Admin'),
+                    context.l10n.byValue('Students')
+                  ],
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 StudentEmptyState(
@@ -139,25 +143,29 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               PageHeader(
-                title: 'Student Management Module',
-                subtitle:
-                    'Premium student lifecycle workspace with analytics, approvals, communication, bulk upload, documents, activity tracking, and secure exports.',
-                breadcrumbs: const ['Admin', 'Academy', 'Students'],
+                title: context.l10n.byValue('Student Management Module'),
+                subtitle: context.l10n.byValue(
+                    'Premium student lifecycle workspace with analytics, approvals, communication, bulk upload, documents, activity tracking, and secure exports.'),
+                breadcrumbs: [
+                  context.l10n.byValue('Admin'),
+                  context.l10n.byValue('Academy'),
+                  context.l10n.byValue('Students')
+                ],
                 actions: [
                   PremiumButton(
-                    label: 'Bulk upload',
+                    label: context.l10n.byValue('Bulk upload'),
                     icon: Icons.file_upload_outlined,
                     isSecondary: true,
                     onPressed: () => _pickImportFile(store),
                   ),
                   PremiumButton(
-                    label: 'Export analytics',
+                    label: context.l10n.byValue('Export analytics'),
                     icon: Icons.picture_as_pdf_rounded,
                     isSecondary: true,
                     onPressed: () => _exportAnalyticsReport(store),
                   ),
                   PremiumButton(
-                    label: 'Add student',
+                    label: context.l10n.byValue('Add student'),
                     icon: Icons.person_add_alt_1_rounded,
                     onPressed: () =>
                         _openStudentEditor(context, store, existing: null),
@@ -334,12 +342,12 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Realtime student operations',
+                      context.l10n.byValue('Realtime student operations'),
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Search by name, ID, email, department, or course, then move across approvals, documents, analytics, groups, and communication without losing context.',
+                      context.l10n.byValue('Search by name, ID, email, department, or course, then move across approvals, documents, analytics, groups, and communication without losing context.'),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
@@ -365,9 +373,9 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
                       filters.copyWith(query: value),
                     ),
                   ),
-                  decoration: const InputDecoration(
-                    hintText: 'Search name, ID, email, department, course',
-                    prefixIcon: Icon(Icons.search_rounded),
+                  decoration: InputDecoration(
+                    hintText: context.l10n.byValue('Search name, ID, email, department, course'),
+                    prefixIcon: const Icon(Icons.search_rounded),
                   ),
                 ),
               ),
@@ -486,12 +494,12 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
                   StudentsFiltersChangedAction(const StudentFilters()),
                 ),
                 icon: const Icon(Icons.restart_alt_rounded),
-                label: const Text('Reset filters'),
+                label: Text(context.l10n.byValue('Reset filters')),
               ),
               OutlinedButton.icon(
                 onPressed: () => _exportRegistryCsv(students),
                 icon: const Icon(Icons.download_rounded),
-                label: const Text('Export table'),
+                label: Text(context.l10n.byValue('Export table')),
               ),
             ],
           ),
@@ -502,7 +510,7 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
             children: [
               for (final tab in StudentWorkspaceTab.values)
                 ChoiceChip(
-                  label: Text(tab.label),
+                  label: Text(context.l10n.byValue(tab.label)),
                   selected: vm.state.activeTab == tab,
                   onSelected: (_) =>
                       store.dispatch(StudentsTabChangedAction(tab)),
@@ -520,19 +528,19 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
     StudentsState state,
   ) {
     return StudentSectionCard(
-      title: 'Bulk upload review',
-      subtitle:
-          'Auto-mapped CSV/Excel columns, duplicate detection, and progress-aware import pipeline.',
+      title: context.l10n.byValue('Bulk upload review'),
+      subtitle: context.l10n.byValue(
+          'Auto-mapped CSV/Excel columns, duplicate detection, and progress-aware import pipeline.'),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           StudentStatusPill(
-            label: '${preview.validRows} valid',
+            label: '${preview.validRows} ${context.l10n.byValue('valid')}',
             color: AppColors.success,
           ),
           const SizedBox(width: AppSpacing.sm),
           StudentStatusPill(
-            label: '${preview.duplicates.length} duplicates',
+            label: '${preview.duplicates.length} ${context.l10n.byValue('duplicates')}',
             color: AppColors.warning,
           ),
         ],
@@ -570,8 +578,8 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
           const SizedBox(height: AppSpacing.md),
           Text(
             preview.duplicates.isEmpty
-                ? 'No duplicates detected in the import file.'
-                : 'Duplicates: ${preview.duplicates.take(5).join(', ')}',
+                ? context.l10n.byValue('No duplicates detected in the import file.')
+                : '${context.l10n.byValue('Duplicates:')} ${preview.duplicates.take(5).join(', ')}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -583,12 +591,12 @@ class _StudentsManagementPageState extends State<StudentsManagementPage> {
                     : () =>
                           store.dispatch(const StudentsImportRequestedAction()),
                 icon: const Icon(Icons.play_arrow_rounded),
-                label: const Text('Import students'),
+                label: Text(context.l10n.byValue('Import students')),
               ),
               const SizedBox(width: AppSpacing.sm),
               Text(
                 state.lastImportResult?.summary ??
-                    '${preview.totalRows} rows detected in ${preview.fileName}',
+                    '${preview.totalRows} ${context.l10n.byValue('rows detected in')} ${preview.fileName}',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -899,16 +907,22 @@ class _SecurityPanel extends StatelessWidget {
             final safeRemaining = remaining.isNegative
                 ? Duration.zero
                 : remaining;
+            
+            final isAr = context.l10n.locale.languageCode == 'ar';
+            final timeoutText = isAr
+                ? 'تنتهي الجلسة خلال ${safeRemaining.inMinutes} دقيقة • يتطلب مصادقة ثنائية للإجراءات الحساسة.'
+                : 'Session timeout in ${safeRemaining.inMinutes}m • 2FA required for sensitive actions.';
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Security',
+                  context.l10n.byValue('Security'),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
-                  'Session timeout in ${safeRemaining.inMinutes}m • 2FA required for sensitive actions.',
+                  timeoutText,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -940,19 +954,19 @@ class _FilterDropdown extends StatelessWidget {
       child: DropdownButtonFormField<String>(
         initialValue: items.contains(value) ? value : items.firstOrNull,
         isExpanded: true,
-        decoration: InputDecoration(labelText: label),
+        decoration: InputDecoration(labelText: context.l10n.byValue(label)),
         selectedItemBuilder: (context) => [
           for (final item in items)
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(item, maxLines: 1, overflow: TextOverflow.ellipsis),
+              child: Text(context.l10n.byValue(item), maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
         ],
         items: [
           for (final item in items)
             DropdownMenuItem(
               value: item,
-              child: Text(item, maxLines: 1, overflow: TextOverflow.ellipsis),
+              child: Text(context.l10n.byValue(item), maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
         ],
         onChanged: (value) {

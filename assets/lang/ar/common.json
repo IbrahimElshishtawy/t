@@ -425,7 +425,15 @@
     "Assign course": "تعيين مقرر",
     "results": "نتائج",
     "selected": "محدد",
-    "Actions": "الإجراءات"
+    "Actions": "الإجراءات",
+    "Bulk upload review": "مراجعة الرفع الجماعي",
+    "Auto-mapped CSV/Excel columns, duplicate detection, and progress-aware import pipeline.": "أعمدة CSV/Excel مخصصة تلقائياً، كشف التكرارات، ومراحل استيراد متوافقة مع تقدم العملية.",
+    "valid": "صالح",
+    "duplicates": "مكرر",
+    "No duplicates detected in the import file.": "لم يتم كشف أي صفوف مكررة في ملف الاستيراد.",
+    "Duplicates:": "التكرارات:",
+    "Import students": "استيراد الطلاب",
+    "rows detected in": "صفاً تم كشفها في"
   },
   "by_fragment": {
     " students": " طالب",

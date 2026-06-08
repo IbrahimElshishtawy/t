@@ -1,6 +1,7 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../app/localization/app_localizations.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../models/student_management_models.dart';
@@ -54,12 +55,12 @@ class RegistrySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolvedSelectedStudent = selectedStudent;
     final table = StudentSectionCard(
-      title: 'Student registry',
-      subtitle:
-          'Sticky-header student registry with live search results, bulk actions, and deep profile drilldown.',
+      title: context.l10n.byValue('Student registry'),
+      subtitle: context.l10n.byValue(
+          'Sticky-header student registry with live search results, bulk actions, and deep profile drilldown.'),
       trailing: state.selectedStudentIds.isEmpty
           ? StudentStatusPill(
-              label: '${students.length} results',
+              label: '${students.length} ${context.l10n.byValue('results')}',
               color: AppColors.info,
             )
           : Wrap(
@@ -67,19 +68,19 @@ class RegistrySection extends StatelessWidget {
               children: [
                 FilledButton.tonal(
                   onPressed: onApproveSelected,
-                  child: const Text('Approve'),
+                  child: Text(context.l10n.byValue('Approve')),
                 ),
                 FilledButton.tonal(
                   onPressed: onRejectSelected,
-                  child: const Text('Reject'),
+                  child: Text(context.l10n.byValue('Reject')),
                 ),
                 OutlinedButton(
                   onPressed: onAssignCourse,
-                  child: const Text('Assign course'),
+                  child: Text(context.l10n.byValue('Assign course')),
                 ),
                 TextButton(
                   onPressed: onClearSelection,
-                  child: Text('${state.selectedStudentIds.length} selected'),
+                  child: Text('${state.selectedStudentIds.length} ${context.l10n.byValue('selected')}'),
                 ),
               ],
             ),
@@ -105,27 +106,27 @@ class RegistrySection extends StatelessWidget {
               ),
             ),
             DataColumn2(
-              label: const Text('Student'),
+              label: Text(context.l10n.byValue('Student')),
               size: ColumnSize.L,
               onSort: (_, _) => onSort('name'),
             ),
             DataColumn2(
-              label: const Text('Department'),
+              label: Text(context.l10n.byValue('Department')),
               onSort: (_, _) => onSort('department'),
             ),
             DataColumn2(
-              label: const Text('Attendance'),
+              label: Text(context.l10n.byValue('Attendance')),
               onSort: (_, _) => onSort('attendance'),
             ),
             DataColumn2(
-              label: const Text('GPA'),
+              label: Text(context.l10n.byValue('GPA')),
               onSort: (_, _) => onSort('gpa'),
             ),
             DataColumn2(
-              label: const Text('Status'),
+              label: Text(context.l10n.byValue('Status')),
               onSort: (_, _) => onSort('status'),
             ),
-            const DataColumn2(label: Text('Actions'), size: ColumnSize.S),
+            DataColumn2(label: Text(context.l10n.byValue('Actions')), size: ColumnSize.S),
           ],
           rows: [
             for (final student in students)
@@ -160,14 +161,14 @@ class RegistrySection extends StatelessWidget {
                       ],
                     ),
                   ),
-                  DataCell(Text('${student.department} • Y${student.year}')),
+                  DataCell(Text('${context.l10n.byValue(student.department)} • Y${student.year}')),
                   DataCell(
                     Text('${student.attendanceRate.toStringAsFixed(0)}%'),
                   ),
                   DataCell(Text(student.gpa.toStringAsFixed(2))),
                   DataCell(
                     StudentStatusPill(
-                      label: student.enrollmentStatus.label,
+                      label: context.l10n.byValue(student.enrollmentStatus.label),
                       color: student.isAtRisk
                           ? AppColors.danger
                           : AppColors.success,
