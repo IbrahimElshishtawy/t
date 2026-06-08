@@ -13,7 +13,7 @@ import '../../../../shared/enums/load_status.dart';
 import '../../../../shared/models/notification_models.dart';
 import '../../../../shared/widgets/premium_button.dart';
 import '../../../../state/app_state.dart';
-import '../../../../app/localization/app_localizations.dart';
+import 'package:tolab_fci/app/localization/app_localizations.dart';
 import '../../models/student_management_models.dart';
 import '../../state/students_state.dart';
 import '../../widgets/student_module_primitives.dart';

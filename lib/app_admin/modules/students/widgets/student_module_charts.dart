@@ -3,7 +3,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../app/localization/app_localizations.dart';
+import 'package:tolab_fci/app/localization/app_localizations.dart';
 import '../../../core/colors/app_colors.dart';
 import '../models/student_management_models.dart';
 
