@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:tolab_fci/app/localization/app_localizations.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../shared/widgets/premium_button.dart';
@@ -73,8 +74,10 @@ class _StaffAccountFormSheetState extends State<StaffAccountFormSheet> {
   @override
   Widget build(BuildContext context) {
     final title = widget.record == null
-        ? 'Create ${_isDoctor ? 'doctor' : 'assistant'} account'
-        : 'Edit staff account';
+        ? (_isDoctor
+            ? context.l10n.byValue('Create doctor account')
+            : context.l10n.byValue('Create assistant account'))
+        : context.l10n.byValue('Edit staff account');
     final width = MediaQuery.sizeOf(context).width;
     final useSideSummary = width >= 1100;
 
@@ -110,7 +113,8 @@ class _StaffAccountFormSheetState extends State<StaffAccountFormSheet> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Configure identity, role type, permissions, and academic assignments in one compact workflow.',
+                            context.l10n.byValue(
+                                'Configure identity, role type, permissions, and academic assignments in one compact workflow.'),
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
@@ -127,11 +131,13 @@ class _StaffAccountFormSheetState extends State<StaffAccountFormSheet> {
                   spacing: AppSpacing.sm,
                   runSpacing: AppSpacing.sm,
                   children: [
-                    StaffStatusBadge(_role),
+                    StaffStatusBadge(context.l10n.byValue(_role)),
                     StaffStatusBadge(
-                      _isDoctor ? _doctorType : 'Teaching assistant',
+                      _isDoctor
+                          ? context.l10n.byValue(_doctorType)
+                          : context.l10n.byValue('Teaching assistant'),
                     ),
-                    StaffStatusBadge(_status),
+                    StaffStatusBadge(context.l10n.byValue(_status)),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.lg),
