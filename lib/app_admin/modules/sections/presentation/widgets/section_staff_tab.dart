@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../app/localization/app_localizations.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
@@ -33,9 +34,9 @@ class SectionStaffTab extends StatelessWidget {
         AppCard(
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: SectionPanelHeader(
-            title: 'Assigned staff',
+            title: context.l10n.byValue('Assigned staff'),
             subtitle:
-                'Manage doctors and assistants with role visibility, load balancing, and assignment controls.',
+                context.l10n.byValue('Manage doctors and assistants with role visibility, load balancing, and assignment controls.'),
             trailing: PremiumButton(
               label: 'Assign staff',
               icon: Icons.person_add_alt_rounded,
@@ -76,12 +77,12 @@ class SectionStaffTab extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              member.name,
+                              context.l10n.byValue(member.name),
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              member.focusArea,
+                              context.l10n.byValue(member.focusArea),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
@@ -95,7 +96,7 @@ class SectionStaffTab extends StatelessWidget {
                     children: [
                       Expanded(child: StatusBadge(member.status)),
                       Text(
-                        member.officeHoursLabel,
+                        context.l10n.byValue(member.officeHoursLabel),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
@@ -103,7 +104,7 @@ class SectionStaffTab extends StatelessWidget {
                   const SizedBox(height: AppSpacing.md),
                   SectionCapacityBar(
                     value: member.loadRate,
-                    label: 'Teaching load ${(member.loadRate * 100).round()}%',
+                    label: '${context.l10n.byValue('Teaching load')} ${(member.loadRate * 100).round()}%',
                   ),
                   const Spacer(),
                   Wrap(

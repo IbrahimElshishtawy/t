@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/spacing/app_spacing.dart';
-import '../../shared/widgets/premium_button.dart';
+import '../../../../shared/widgets/premium_button.dart';
 import '../../models/section_management_models.dart';
 import 'section_management_primitives.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../app/localization/app_localizations.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
@@ -39,16 +40,16 @@ class SectionDesktopSidebar extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SectionPanelHeader(
-                title: 'Capacity watch',
+              SectionPanelHeader(
+                title: context.l10n.byValue('Capacity watch'),
                 subtitle:
-                    'Real-time operational signals across this section and nearby cohorts.',
+                    context.l10n.byValue('Real-time operational signals across this section and nearby cohorts.'),
               ),
               const SizedBox(height: AppSpacing.md),
               SectionCapacityBar(
                 value: selectedRecord.capacityUsage,
                 label:
-                    '${selectedRecord.studentsCount}/${selectedRecord.capacity} occupied',
+                    '${selectedRecord.studentsCount}/${selectedRecord.capacity} ${context.l10n.byValue('occupied')}',
               ),
               const SizedBox(height: AppSpacing.md),
               for (final alert in visibleAlerts.take(3)) ...[
@@ -105,7 +106,7 @@ class _SidebarLoadTile extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           SectionCapacityBar(
             value: record.capacityUsage,
-            label: '${record.studentsCount}/${record.capacity} seats',
+            label: '${record.studentsCount}/${record.capacity} ${context.l10n.byValue('seats')}',
           ),
         ],
       ),
@@ -131,10 +132,10 @@ class _DesktopMobilePreview extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SectionPanelHeader(
-            title: 'Mobile preview',
+          SectionPanelHeader(
+            title: context.l10n.byValue('Mobile preview'),
             subtitle:
-                'A compact iOS-style adaptation for on-the-go section management.',
+                context.l10n.byValue('A compact iOS-style adaptation for on-the-go section management.'),
           ),
           const SizedBox(height: AppSpacing.lg),
           Center(
@@ -198,21 +199,21 @@ class _DesktopMobilePreview extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Capacity',
+                              context.l10n.byValue('Capacity'),
                               style: Theme.of(context).textTheme.labelMedium,
                             ),
                             const SizedBox(height: AppSpacing.xs),
                             SectionCapacityBar(
                               value: record.capacityUsage,
                               label:
-                                  '${record.studentsCount}/${record.capacity} seats',
+                                  '${record.studentsCount}/${record.capacity} ${context.l10n.byValue('seats')}',
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: AppSpacing.md),
                       Text(
-                        _mobilePreviewTitle(activeTab),
+                        _mobilePreviewTitle(context, activeTab),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -252,19 +253,19 @@ class _DesktopMobilePreview extends StatelessWidget {
                         Column(
                           children: [
                             _CompactOverviewStat(
-                              label: 'Students',
+                              label: context.l10n.byValue('Students'),
                               value: record.studentsCount.toString(),
                               color: AppColors.primary,
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             _CompactOverviewStat(
-                              label: 'Subjects',
+                              label: context.l10n.byValue('Subjects'),
                               value: record.subjectsCount.toString(),
                               color: AppColors.secondary,
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             _CompactOverviewStat(
-                              label: 'Staff',
+                              label: context.l10n.byValue('Staff'),
                               value: record.staffCount.toString(),
                               color: AppColors.info,
                             ),
@@ -281,12 +282,12 @@ class _DesktopMobilePreview extends StatelessWidget {
     );
   }
 
-  static String _mobilePreviewTitle(SectionDetailTab tab) => switch (tab) {
-    SectionDetailTab.overview => 'Quick summary',
-    SectionDetailTab.students => 'Roster cards',
-    SectionDetailTab.schedule => 'Agenda',
-    SectionDetailTab.subjects => 'Subject list',
-    SectionDetailTab.staff => 'Staff cards',
+  static String _mobilePreviewTitle(BuildContext context, SectionDetailTab tab) => switch (tab) {
+    SectionDetailTab.overview => context.l10n.byValue('Quick summary'),
+    SectionDetailTab.students => context.l10n.byValue('Roster cards'),
+    SectionDetailTab.schedule => context.l10n.byValue('Agenda'),
+    SectionDetailTab.subjects => context.l10n.byValue('Subject list'),
+    SectionDetailTab.staff => context.l10n.byValue('Staff cards'),
   };
 }
 
@@ -321,14 +322,14 @@ class _MobileEventCard extends StatelessWidget {
           Text(event.course, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: AppSpacing.md),
           _MetricLine(
-            label: 'Time',
+            label: context.l10n.byValue('Time'),
             value:
                 '${DateFormat('hh:mm a').format(event.start)} - ${DateFormat('hh:mm a').format(event.end)}',
           ),
           const SizedBox(height: AppSpacing.xs),
-          _MetricLine(label: 'Instructor', value: event.instructor),
+          _MetricLine(label: context.l10n.byValue('Instructor'), value: context.l10n.byValue(event.instructor)),
           const SizedBox(height: AppSpacing.xs),
-          _MetricLine(label: 'Location', value: event.location),
+          _MetricLine(label: context.l10n.byValue('Location'), value: context.l10n.byValue(event.location)),
         ],
       ),
     );
@@ -360,12 +361,12 @@ class _CompactStudentCell extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  student.name,
+                 Text(
+                  context.l10n.byValue(student.name),
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(
-                  student.yearLabel,
+                  context.l10n.byValue(student.yearLabel),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -402,7 +403,7 @@ class _CompactSubjectCell extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(
-                  subject.title,
+                  context.l10n.byValue(subject.title),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -446,10 +447,10 @@ class _CompactStaffCell extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  member.name,
+                  context.l10n.byValue(member.name),
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                Text(member.role, style: Theme.of(context).textTheme.bodySmall),
+                Text(context.l10n.byValue(member.role), style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
           ),

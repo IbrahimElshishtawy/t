@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-import '../../../../app/localization/app_localizations.dart';
+import '../../../../../app/localization/app_localizations.dart';
 
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';

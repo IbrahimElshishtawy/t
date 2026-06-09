@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../app/localization/app_localizations.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
@@ -47,10 +48,10 @@ class SectionScheduleTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SectionPanelHeader(
-                title: 'Schedule',
+              SectionPanelHeader(
+                title: context.l10n.byValue('Schedule'),
                 subtitle:
-                    'Day and week views with responsive event blocks, today highlighting, and semantic event colors.',
+                    context.l10n.byValue('Day and week views with responsive event blocks, today highlighting, and semantic event colors.'),
               ),
               const SizedBox(height: AppSpacing.lg),
               Wrap(
@@ -59,12 +60,12 @@ class SectionScheduleTab extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   SectionSegmentChip(
-                    label: 'Day view',
+                    label: context.l10n.byValue('Day view'),
                     selected: viewMode == SectionScheduleViewMode.day,
                     onTap: () => onViewModeChanged(SectionScheduleViewMode.day),
                   ),
                   SectionSegmentChip(
-                    label: 'Week view',
+                    label: context.l10n.byValue('Week view'),
                     selected: viewMode == SectionScheduleViewMode.week,
                     onTap: () => onViewModeChanged(SectionScheduleViewMode.week),
                   ),
@@ -106,11 +107,11 @@ class SectionScheduleTab extends StatelessWidget {
               Wrap(
                 spacing: AppSpacing.sm,
                 runSpacing: AppSpacing.sm,
-                children: const [
-                  _LegendPill(label: 'Lecture', color: AppColors.primary),
-                  _LegendPill(label: 'Section', color: AppColors.secondary),
-                  _LegendPill(label: 'Exam', color: AppColors.danger),
-                  _LegendPill(label: 'Quiz', color: AppColors.warning),
+                children: [
+                  _LegendPill(label: context.l10n.byValue('Lecture'), color: AppColors.primary),
+                  _LegendPill(label: context.l10n.byValue('Section'), color: AppColors.secondary),
+                  _LegendPill(label: context.l10n.byValue('Exam'), color: AppColors.danger),
+                  _LegendPill(label: context.l10n.byValue('Quiz'), color: AppColors.warning),
                 ],
               ),
             ],
@@ -268,7 +269,7 @@ class _MobileScheduleAgenda extends StatelessWidget {
     if (events.isEmpty) {
       return AppCard(
         child: Text(
-          'No scheduled events for the selected day.',
+          context.l10n.byValue('No scheduled events for the selected day.'),
           style: Theme.of(context).textTheme.bodySmall,
         ),
       );
@@ -313,17 +314,17 @@ class _MobileEventCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.xs),
-          Text(event.course, style: Theme.of(context).textTheme.bodySmall),
+          Text(context.l10n.byValue(event.course), style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: AppSpacing.md),
           _MetricLine(
-            label: 'Time',
+            label: context.l10n.byValue('Time'),
             value:
                 '${DateFormat('hh:mm a').format(event.start)} - ${DateFormat('hh:mm a').format(event.end)}',
           ),
           const SizedBox(height: AppSpacing.xs),
-          _MetricLine(label: 'Instructor', value: event.instructor),
+          _MetricLine(label: context.l10n.byValue('Instructor'), value: context.l10n.byValue(event.instructor)),
           const SizedBox(height: AppSpacing.xs),
-          _MetricLine(label: 'Location', value: event.location),
+          _MetricLine(label: context.l10n.byValue('Location'), value: context.l10n.byValue(event.location)),
         ],
       ),
     );
@@ -538,7 +539,7 @@ class _ScheduleEventBlock extends StatelessWidget {
               if (!compact) ...[
                 const SizedBox(height: AppSpacing.xxs),
                 Text(
-                  event.course,
+                  context.l10n.byValue(event.course),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodySmall,
