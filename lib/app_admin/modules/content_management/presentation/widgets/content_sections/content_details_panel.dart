@@ -5,7 +5,7 @@ import 'package:tolab_fci/app_admin/core/animations/app_motion.dart';
 import 'package:tolab_fci/app_admin/core/spacing/app_spacing.dart';
 import 'package:tolab_fci/app_admin/core/widgets/app_card.dart';
 import 'package:tolab_fci/app_admin/shared/widgets/premium_button.dart';
-import 'package:tolab_fci/app_admin/state/app_state.dart';
+import '../../../../../state/app_state.dart';
 import 'package:tolab_fci/app_admin/modules/content_management/models/content_models.dart';
 import 'package:tolab_fci/app_admin/modules/content_management/state/content_actions.dart';
 import 'package:tolab_fci/app_admin/modules/content_management/presentation/screens/content_management_screen.dart';

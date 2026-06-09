@@ -26,7 +26,7 @@ class SectionsScreen extends StatefulWidget {
 }
 
 class _SectionsScreenState extends State<SectionsScreen> {
-  late final List<SectionManagementRecord> _records;
+  late List<SectionManagementRecord> _records;
   late SectionManagementRecord _selectedRecord;
   late DateTime _selectedDay;
 

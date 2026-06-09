@@ -213,7 +213,6 @@ Widget _compactDropdownLabel(BuildContext context, String text) => Align(
   alignment: AlignmentDirectional.centerStart,
   child: Text(context.l10n.byValue(text), maxLines: 1, overflow: TextOverflow.ellipsis),
 );
-
 class _CompactDropdownText extends StatelessWidget {
   const _CompactDropdownText(this.text);
 
@@ -221,6 +220,6 @@ class _CompactDropdownText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, maxLines: 1, overflow: TextOverflow.ellipsis);
+    return Text(context.l10n.byValue(text), maxLines: 1, overflow: TextOverflow.ellipsis);
   }
 }

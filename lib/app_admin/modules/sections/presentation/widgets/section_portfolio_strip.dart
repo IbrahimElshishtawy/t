@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/spacing/app_spacing.dart';
+import '../../shared/widgets/premium_button.dart';
 import '../../models/section_management_models.dart';
 import 'section_management_primitives.dart';
 
@@ -10,11 +11,13 @@ class SectionPortfolioStrip extends StatelessWidget {
     required this.records,
     required this.selectedRecord,
     required this.onSelectRecord,
+    required this.onAddSection,
   });
 
   final List<SectionManagementRecord> records;
   final SectionManagementRecord selectedRecord;
   final ValueChanged<SectionManagementRecord> onSelectRecord;
+  final VoidCallback onAddSection;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +28,20 @@ class SectionPortfolioStrip extends StatelessWidget {
           title: 'Section portfolio',
           subtitle:
               'Compare sibling cohorts, overloaded groups, and empty capacity before moving students.',
-          trailing: Text(
-            '${records.length} active cohorts',
-            style: Theme.of(context).textTheme.labelMedium,
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '${records.length} active cohorts',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              const SizedBox(width: AppSpacing.md),
+              PremiumButton(
+                label: 'New section',
+                icon: Icons.add_rounded,
+                onPressed: onAddSection,
+              ),
+            ],
           ),
         ),
         const SizedBox(height: AppSpacing.md),
@@ -55,3 +69,4 @@ class SectionPortfolioStrip extends StatelessWidget {
     );
   }
 }
+
