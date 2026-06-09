@@ -16,6 +16,7 @@ class StudentProfilePanel extends StatelessWidget {
     required this.onDownloadBundle,
     required this.onApproveDocument,
     required this.onRejectDocument,
+    this.height,
   });
 
   final StudentProfile student;
@@ -25,6 +26,7 @@ class StudentProfilePanel extends StatelessWidget {
   final VoidCallback onDownloadBundle;
   final ValueChanged<StudentDocumentRecord> onApproveDocument;
   final ValueChanged<StudentDocumentRecord> onRejectDocument;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class StudentProfilePanel extends StatelessWidget {
       title: 'Student profile',
       subtitle:
           'Photo, contacts, courses, grades, attendance, documents, and activity feed.',
+      height: height,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

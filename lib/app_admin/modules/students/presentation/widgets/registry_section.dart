@@ -222,6 +222,7 @@ class RegistrySection extends StatelessWidget {
             onDownloadBundle: onDownloadBundle,
             onApproveDocument: onApproveDocument,
             onRejectDocument: onRejectDocument,
+            height: 520,
           ),
         ),
       ],

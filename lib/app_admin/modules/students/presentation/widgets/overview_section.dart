@@ -277,6 +277,7 @@ class OverviewSection extends StatelessWidget {
                     onDownloadBundle: onDownloadBundle,
                     onApproveDocument: onApproveDocument,
                     onRejectDocument: onRejectDocument,
+                    height: 360,
                   ),
                 ),
               ],
