@@ -90,7 +90,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                     SizedBox(
                       width: 220,
                       child: DropdownButtonFormField<String>(
-                        value: _statusFilter,
+                        initialValue: _statusFilter,
                         decoration: InputDecoration(
                           labelText: context.l10n.byValue('Status'),
                         ),
