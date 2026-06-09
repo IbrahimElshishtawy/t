@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/localization/app_localizations.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../models/section_management_models.dart';
@@ -30,7 +31,7 @@ class SectionTabBar extends StatelessWidget {
         children: [
           for (final tab in SectionDetailTab.values)
             SectionSegmentChip(
-              label: _tabLabel(tab),
+              label: context.l10n.byValue(_tabLabel(tab)),
               selected: activeTab == tab,
               onTap: () => onTabChanged(tab),
             ),
@@ -47,3 +48,4 @@ class SectionTabBar extends StatelessWidget {
         SectionDetailTab.staff => 'Staff',
       };
 }
+

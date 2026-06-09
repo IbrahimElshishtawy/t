@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import '../../../../app/localization/app_localizations.dart';
+
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
@@ -30,33 +32,33 @@ class SectionOverviewTab extends StatelessWidget {
 
     final metrics = [
       SectionMetricTile(
-        label: 'Students',
+        label: context.l10n.byValue('Students'),
         value: record.studentsCount.toString(),
         icon: Icons.groups_rounded,
         color: AppColors.primary,
-        footer: '${record.activeStudentsCount} active roster',
+        footer: '${record.activeStudentsCount} ${context.l10n.byValue('active roster')}',
       ),
       SectionMetricTile(
-        label: 'Capacity',
+        label: context.l10n.byValue('Capacity'),
         value: '${record.capacityUsagePercent}%',
         icon: Icons.speed_rounded,
         color: capacityBandColor(record.capacityBand),
-        footer: '${record.capacity} total seats',
+        footer: '${record.capacity} ${context.l10n.byValue('total seats')}',
       ),
       SectionMetricTile(
-        label: 'Assigned subjects',
+        label: context.l10n.byValue('Assigned subjects'),
         value: record.subjectsCount.toString(),
         icon: Icons.menu_book_rounded,
         color: AppColors.secondary,
-        footer: '${record.subjects.length} teaching blocks',
+        footer: '${record.subjects.length} ${context.l10n.byValue('teaching blocks')}',
       ),
       SectionMetricTile(
-        label: 'Assigned staff',
+        label: context.l10n.byValue('Assigned staff'),
         value: record.staffCount.toString(),
         icon: Icons.badge_rounded,
         color: AppColors.info,
         footer:
-            '${record.doctorsCount} doctors, ${record.assistantsCount} assistants',
+            '${record.doctorsCount} ${context.l10n.byValue('Doctors')}, ${record.assistantsCount} ${context.l10n.byValue('Assistants')}',
       ),
     ];
 
@@ -81,27 +83,27 @@ class SectionOverviewTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.lg),
         _ResponsiveTwoUp(
           leading: SectionDonutChartCard(
-            title: 'Student distribution',
+            title: context.l10n.byValue('Student distribution'),
             subtitle:
-                'Roster health by active, inactive, and at-risk student states.',
+                context.l10n.byValue('Roster health by active, inactive, and at-risk student states.'),
             points: record.studentDistribution,
-            centerLabel: 'Students',
+            centerLabel: context.l10n.byValue('Students'),
           ),
           trailing: SectionBarChartCard(
-            title: 'Capacity usage',
+            title: context.l10n.byValue('Capacity usage'),
             subtitle:
-                'Live occupancy compared with available seats and waitlist pressure.',
+                context.l10n.byValue('Live occupancy compared with available seats and waitlist pressure.'),
             points: [
               SectionChartPoint(
-                label: 'Filled',
+                label: context.l10n.byValue('Filled'),
                 value: record.studentsCount.toDouble(),
               ),
               SectionChartPoint(
-                label: 'Free',
+                label: context.l10n.byValue('Free'),
                 value: math.max(record.availableSeats, 0).toDouble(),
               ),
               SectionChartPoint(
-                label: 'Waitlist',
+                label: context.l10n.byValue('Waitlist'),
                 value: record.waitlistCount.toDouble(),
               ),
             ],
@@ -111,16 +113,16 @@ class SectionOverviewTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.lg),
         _ResponsiveTwoUp(
           leading: SectionLineChartCard(
-            title: 'Section performance',
+            title: context.l10n.byValue('Section performance'),
             subtitle:
-                'Rolling composite score from GPA health, attendance, and delivery rhythm.',
+                context.l10n.byValue('Rolling composite score from GPA health, attendance, and delivery rhythm.'),
             points: record.performanceTrend,
             color: AppColors.primary,
           ),
           trailing: SectionLoadComparisonCard(
-            title: 'Overloaded and empty sections',
+            title: context.l10n.byValue('Overloaded and empty sections'),
             subtitle:
-                'Compare nearby cohorts before approving transfers or capacity changes.',
+                context.l10n.byValue('Compare nearby cohorts before approving transfers or capacity changes.'),
             snapshots: sortedSnapshots.take(4).toList(),
           ),
         ),
@@ -131,10 +133,10 @@ class SectionOverviewTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SectionPanelHeader(
-                  title: 'Subject delivery pulse',
+                SectionPanelHeader(
+                  title: context.l10n.byValue('Subject delivery pulse'),
                   subtitle:
-                      'Completion and staffing coverage across the assigned subjects.',
+                      context.l10n.byValue('Completion and staffing coverage across the assigned subjects.'),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 for (final subject in record.subjects) ...[
@@ -150,10 +152,10 @@ class SectionOverviewTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SectionPanelHeader(
-                  title: 'Staff coverage',
+                SectionPanelHeader(
+                  title: context.l10n.byValue('Staff coverage'),
                   subtitle:
-                      'Teaching load and readiness across doctors and assistants.',
+                      context.l10n.byValue('Teaching load and readiness across doctors and assistants.'),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 for (
@@ -241,7 +243,7 @@ class _SubjectPulseRow extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                '${subject.code} • ${subject.title}',
+                '${subject.code} • ${context.l10n.byValue(subject.title)}',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
@@ -250,13 +252,13 @@ class _SubjectPulseRow extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.xs),
         Text(
-          '${subject.instructorName} • ${subject.lecturesCount} lectures',
+          '${context.l10n.byValue(subject.instructorName)} • ${subject.lecturesCount} ${context.l10n.byValue('Lectures')}',
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.sm),
         SectionCapacityBar(
           value: subject.completionRate,
-          label: '${(subject.completionRate * 100).round()}% complete',
+          label: '${(subject.completionRate * 100).round()}% ${context.l10n.byValue('complete')}',
         ),
       ],
     );
@@ -284,10 +286,10 @@ class _StaffPulseRow extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(member.name, style: Theme.of(context).textTheme.titleSmall),
+              Text(context.l10n.byValue(member.name), style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 4),
               Text(
-                '${member.role} • ${member.focusArea}',
+                '${context.l10n.byValue(member.role)} • ${context.l10n.byValue(member.focusArea)}',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],

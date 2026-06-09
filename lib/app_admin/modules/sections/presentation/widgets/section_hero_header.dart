@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import '../../../../app/localization/app_localizations.dart';
+
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/spacing/app_spacing.dart';
@@ -32,9 +34,9 @@ class SectionHeroHeader extends StatelessWidget {
     final capacityColor = capacityBandColor(record.capacityBand);
     final alertLabel = switch (record.capacityBand) {
       SectionCapacityBand.available =>
-        '${record.availableSeats} seats available',
-      SectionCapacityBand.almostFull => 'Almost full, review incoming adds',
-      SectionCapacityBand.full => 'Section full, waitlist active',
+        '${record.availableSeats} ${context.l10n.byValue('seats available')}',
+      SectionCapacityBand.almostFull => context.l10n.byValue('Almost full, review incoming adds'),
+      SectionCapacityBand.full => context.l10n.byValue('Section full, waitlist active'),
     };
 
     return SectionGlassPanel(
@@ -66,23 +68,23 @@ class SectionHeroHeader extends StatelessWidget {
                         children: [
                           _InfoPill(
                             icon: Icons.apartment_rounded,
-                            label: record.department,
+                            label: context.l10n.byValue(record.department),
                           ),
                           _InfoPill(
                             icon: Icons.school_rounded,
-                            label: record.yearLabel,
+                            label: context.l10n.byValue(record.yearLabel),
                           ),
                           _InfoPill(
                             icon: Icons.auto_stories_rounded,
-                            label: record.semesterLabel,
+                            label: context.l10n.byValue(record.semesterLabel),
                           ),
                           _InfoPill(
                             icon: Icons.place_outlined,
-                            label: record.locationLabel,
+                            label: context.l10n.byValue(record.locationLabel),
                           ),
                           _InfoPill(
                             icon: Icons.sync_rounded,
-                            label: record.lastUpdatedLabel,
+                            label: context.l10n.byValue(record.lastUpdatedLabel),
                           ),
                         ],
                       ),
@@ -115,7 +117,7 @@ class SectionHeroHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Section Management',
+          context.l10n.byValue('Section Management'),
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: AppColors.primary,
                 letterSpacing: 0.3,
@@ -172,7 +174,7 @@ class SectionHeroHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Capacity management',
+                      context.l10n.byValue('Capacity management'),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 4),
@@ -191,14 +193,14 @@ class SectionHeroHeader extends StatelessWidget {
           SectionCapacityBar(
             value: record.capacityUsage,
             label:
-                '${record.studentsCount} filled of ${record.capacity} total seats',
+                '${record.studentsCount} ${context.l10n.byValue('filled of')} ${record.capacity} ${context.l10n.byValue('total seats')}',
           ),
           const SizedBox(height: AppSpacing.md),
           Row(
             children: [
               Expanded(
                 child: _MiniCapacityStat(
-                  label: 'Available',
+                  label: context.l10n.byValue('Available'),
                   value: math.max(record.availableSeats, 0).toString(),
                   color: AppColors.secondary,
                 ),
@@ -206,7 +208,7 @@ class SectionHeroHeader extends StatelessWidget {
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: _MiniCapacityStat(
-                  label: 'Waitlist',
+                  label: context.l10n.byValue('Waitlist'),
                   value: record.waitlistCount.toString(),
                   color: AppColors.warning,
                 ),
@@ -214,7 +216,7 @@ class SectionHeroHeader extends StatelessWidget {
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: _MiniCapacityStat(
-                  label: 'Capacity %',
+                  label: context.l10n.byValue('Capacity %'),
                   value: '${record.capacityUsagePercent}%',
                   color: accentColor,
                 ),
