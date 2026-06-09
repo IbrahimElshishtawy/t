@@ -28,8 +28,9 @@ class _DragDropAreaState extends State<DragDropArea> {
   @override
   Widget build(BuildContext context) {
     final title =
-        widget.subtitle ??
-        'Drop PDFs, lecture images, policy sheets, and video assets here.';
+        widget.subtitle != null
+            ? context.l10n.byValue(widget.subtitle!)
+            : context.l10n.byValue('Drop PDFs, lecture images, policy sheets, and video assets here.');
 
     return DropTarget(
       onDragEntered: (_) => setState(() => _isDragging = true),
