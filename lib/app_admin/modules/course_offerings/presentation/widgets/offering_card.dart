@@ -26,7 +26,7 @@ class OfferingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final fillColor = _capacityColor(offering);
     final rangeLabel =
-        '${DateFormat('d MMM', context.l10n.localeName).format(offering.startDate)} - ${DateFormat('d MMM yyyy', context.l10n.localeName).format(offering.endDate)}';
+        '${DateFormat('d MMM', context.l10n.locale.languageCode).format(offering.startDate)} - ${DateFormat('d MMM yyyy', context.l10n.locale.languageCode).format(offering.endDate)}';
 
     return AppCard(
       interactive: true,

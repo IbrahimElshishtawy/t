@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:go_router/go_router.dart';
 import 'package:redux/redux.dart';
 
-import '../../../../app/localization/app_localizations.dart';
+import '../../../../../app/localization/app_localizations.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/responsive/app_breakpoints.dart';
 import '../../../../core/routing/route_paths.dart';

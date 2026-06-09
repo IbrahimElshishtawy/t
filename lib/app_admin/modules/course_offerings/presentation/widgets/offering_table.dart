@@ -159,7 +159,7 @@ class _CapacityCell extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          '${offering.seatsRemaining} ${context.l10n.byValue('seats left')} - ${DateFormat('d MMM', context.l10n.localeName).format(offering.startDate)}',
+          '${offering.seatsRemaining} ${context.l10n.byValue('seats left')} - ${DateFormat('d MMM', context.l10n.locale.languageCode).format(offering.startDate)}',
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
