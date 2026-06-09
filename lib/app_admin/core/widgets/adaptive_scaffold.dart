@@ -465,7 +465,6 @@ class _SidebarNavTileState extends State<_SidebarNavTile> {
         duration: AppMotion.fast,
         curve: AppMotion.emphasized,
         decoration: BoxDecoration(
-          color: backgroundColor,
           borderRadius: BorderRadius.circular(AppConstants.smallRadius),
           border: Border.all(
             color: isSelected
@@ -486,12 +485,17 @@ class _SidebarNavTileState extends State<_SidebarNavTile> {
                 isSelected: isSelected,
                 badgeCount: widget.badgeCount,
                 onTap: widget.onTap,
+                backgroundColor: backgroundColor,
               );
             }
 
             return Material(
               color: Colors.transparent,
               child: ListTile(
+                tileColor: backgroundColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppConstants.smallRadius),
+                ),
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 14,
                   vertical: 2,
@@ -535,6 +539,7 @@ class _CompactSidebarNavTile extends StatelessWidget {
     required this.isSelected,
     required this.badgeCount,
     required this.onTap,
+    required this.backgroundColor,
   });
 
   final IconData icon;
@@ -542,6 +547,7 @@ class _CompactSidebarNavTile extends StatelessWidget {
   final bool isSelected;
   final int badgeCount;
   final VoidCallback onTap;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -556,27 +562,33 @@ class _CompactSidebarNavTile extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(AppConstants.smallRadius),
           onTap: onTap,
-          child: SizedBox(
-            height: 48,
-            child: Center(
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Icon(icon, color: iconColor),
-                  if (badgeCount > 0)
-                    Positioned(
-                      top: -3,
-                      right: -4,
-                      child: Container(
-                        width: 9,
-                        height: 9,
-                        decoration: BoxDecoration(
-                          color: AppColors.danger,
-                          borderRadius: BorderRadius.circular(999),
+          child: Ink(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(AppConstants.smallRadius),
+            ),
+            child: SizedBox(
+              height: 48,
+              child: Center(
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Icon(icon, color: iconColor),
+                    if (badgeCount > 0)
+                      Positioned(
+                        top: -3,
+                        right: -4,
+                        child: Container(
+                          width: 9,
+                          height: 9,
+                          decoration: BoxDecoration(
+                            color: AppColors.danger,
+                            borderRadius: BorderRadius.circular(999),
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
