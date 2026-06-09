@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../app/localization/app_localizations.dart';
+import '../../../../../app/localization/app_localizations.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_spacing.dart';
 import '../theme/dashboard_theme_tokens.dart';
