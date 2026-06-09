@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tolab_fci/app/localization/app_localizations.dart';
 
 import '../../../core/animations/app_motion.dart';
 import '../../../core/colors/app_colors.dart';
@@ -122,7 +123,7 @@ class _ScheduleEventCardState extends State<ScheduleEventCard> {
                       ),
                       if (isDesktop && widget.onEdit != null)
                         IconButton(
-                          tooltip: 'Edit event',
+                          tooltip: context.l10n.byValue('Edit event'),
                           onPressed: widget.onEdit,
                           icon: const Icon(Icons.edit_outlined, size: 18),
                         ),
@@ -180,7 +181,7 @@ class _ScheduleEventCardState extends State<ScheduleEventCard> {
                   _MetaRow(
                     icon: Icons.schedule_rounded,
                     label:
-                        '${DateFormat('EEE, d MMM').format(widget.event.startAt)} | ${DateFormat.jm().format(widget.event.startAt)} - ${DateFormat.jm().format(widget.event.endAt)}',
+                        '${DateFormat('EEE, d MMM', context.l10n.locale.languageCode).format(widget.event.startAt)} | ${DateFormat.jm(context.l10n.locale.languageCode).format(widget.event.startAt)} - ${DateFormat.jm(context.l10n.locale.languageCode).format(widget.event.endAt)}',
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   _MetaRow(
@@ -281,7 +282,7 @@ class _Badge extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppConstants.pillRadius),
       ),
       child: Text(
-        label,
+        context.l10n.byValue(label),
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
           color: foreground,
           fontWeight: FontWeight.w700,
