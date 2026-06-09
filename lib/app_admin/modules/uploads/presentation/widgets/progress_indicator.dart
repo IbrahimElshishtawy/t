@@ -65,7 +65,7 @@ class UploadsProgressIndicator extends StatelessWidget {
                   ? context.l10n.byValue('Upload interrupted')
                   : status == UploadStatus.cancelled
                   ? context.l10n.byValue('Cancelled')
-                  : '${(value * 100).round()}% ' + context.l10n.byValue('uploading'),
+                  : '${(value * 100).round()}% ${context.l10n.byValue('uploading')}',
               key: ValueKey('${status.name}-$value'),
               style: Theme.of(context).textTheme.bodySmall,
             ),

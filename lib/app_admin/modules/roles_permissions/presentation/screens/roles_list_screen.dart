@@ -325,7 +325,7 @@ class _RolesListScreenState extends State<RolesListScreen> {
   ) async {
     final confirmed = await AppConfirmDialog.show(
       context,
-      title: context.l10n.byValue('Delete') + ' ${role.name}?',
+      title: '${context.l10n.byValue('Delete')} ${role.name}?',
       message: context.l10n.byValue(
           'This removes the role and its assignments. Existing users will lose that access immediately.'),
     );
@@ -340,7 +340,7 @@ class _RolesListScreenState extends State<RolesListScreen> {
   ) async {
     final confirmed = await AppConfirmDialog.show(
       context,
-      title: context.l10n.byValue('Delete') + ' ${permission.name}?',
+      title: '${context.l10n.byValue('Delete')} ${permission.name}?',
       message: context.l10n.byValue(
           'This permission will be removed from every role that currently grants it.'),
     );
@@ -607,7 +607,7 @@ class _OverviewMetricsStrip extends StatelessWidget {
       _SummaryMetric(
         title: 'Roles',
         value: '${metrics.totalRoles}',
-        caption: '${metrics.systemRoles} ' + context.l10n.byValue('protected system roles'),
+        caption: '${metrics.systemRoles} ${context.l10n.byValue('protected system roles')}',
         color: AppColors.primary,
         icon: Icons.admin_panel_settings_rounded,
       ),
@@ -615,7 +615,7 @@ class _OverviewMetricsStrip extends StatelessWidget {
         title: 'Permissions',
         value: '${metrics.totalPermissions}',
         caption:
-            '${metrics.averagePermissionsPerRole.toStringAsFixed(1)} ' + context.l10n.byValue('average per role'),
+            '${metrics.averagePermissionsPerRole.toStringAsFixed(1)} ${context.l10n.byValue('average per role')}',
         color: AppColors.info,
         icon: Icons.verified_user_rounded,
       ),
@@ -1120,7 +1120,7 @@ class _AssignUsersDialogState extends State<_AssignUsersDialog> {
     return _DialogFrame(
       title: context.l10n.byValue('Assign users'),
       subtitle:
-          context.l10n.byValue('Select the people who should inherit') + ' ${widget.role.name} ' + context.l10n.byValue('access') + '.',
+          '${context.l10n.byValue('Select the people who should inherit')} ${widget.role.name} ${context.l10n.byValue('access')}.',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

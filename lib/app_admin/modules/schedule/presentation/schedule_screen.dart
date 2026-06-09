@@ -508,14 +508,14 @@ class _AcademicOverviewPanel extends StatelessWidget {
               ),
               _InfoPill(
                 icon: view.icon,
-                label: '${context.l10n.byValue(view.label)} ' + context.l10n.byValue('view'),
+                label: '${context.l10n.byValue(view.label)} ${context.l10n.byValue('view')}',
                 accent: AppColors.info,
               ),
               _InfoPill(
                 icon: Icons.tune_rounded,
                 label: activeFiltersCount == 0
                     ? context.l10n.byValue('All filters open')
-                    : '$activeFiltersCount ' + context.l10n.byValue(activeFiltersCount == 1 ? 'active filter' : 'active filters'),
+                    : '$activeFiltersCount ${context.l10n.byValue(activeFiltersCount == 1 ? 'active filter' : 'active filters')}',
                 accent: activeFiltersCount == 0
                     ? AppColors.secondary
                     : AppColors.warning,
@@ -538,19 +538,19 @@ class _AcademicOverviewPanel extends StatelessWidget {
             runSpacing: AppSpacing.sm,
             children: [
               _LegendChip(
-                label: '${lookups.departments.length} ' + context.l10n.byValue('departments'),
+                label: '${lookups.departments.length} ${context.l10n.byValue('departments')}',
                 valueColor: AppColors.primary,
               ),
               _LegendChip(
-                label: '${lookups.sections.length} ' + context.l10n.byValue('sections'),
+                label: '${lookups.sections.length} ${context.l10n.byValue('sections')}',
                 valueColor: AppColors.info,
               ),
               _LegendChip(
-                label: '${lookups.instructors.length} ' + context.l10n.byValue('instructors'),
+                label: '${lookups.instructors.length} ${context.l10n.byValue('instructors')}',
                 valueColor: AppColors.secondary,
               ),
               _LegendChip(
-                label: '${metrics.completedCount} ' + context.l10n.byValue('completed'),
+                label: '${metrics.completedCount} ${context.l10n.byValue('completed')}',
                 valueColor: AppColors.secondary,
               ),
             ],
@@ -582,7 +582,7 @@ class _AcademicOverviewPanel extends StatelessWidget {
                 Text(
                   nextUpcomingEvent == null
                       ? context.l10n.byValue('No upcoming item is visible in the current scope.')
-                      : context.l10n.byValue('Next item') + ': ${nextUpcomingEvent!.title} ' + context.l10n.byValue('at') + ' ${DateFormat.jm(context.l10n.locale.languageCode).format(nextUpcomingEvent!.startAt)}',
+                      : '${context.l10n.byValue('Next item')}: ${nextUpcomingEvent!.title} ${context.l10n.byValue('at')} ${DateFormat.jm(context.l10n.locale.languageCode).format(nextUpcomingEvent!.startAt)}',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -840,7 +840,7 @@ class _ScheduleSidePanel extends StatelessWidget {
                   if (conflictEvents.isNotEmpty)
                     _InfoPill(
                       icon: Icons.priority_high_rounded,
-                      label: '${conflictEvents.length} ' + context.l10n.byValue(conflictEvents.length == 1 ? 'alert' : 'alerts'),
+                      label: '${conflictEvents.length} ${context.l10n.byValue(conflictEvents.length == 1 ? 'alert' : 'alerts')}',
                       accent: AppColors.danger,
                     ),
                 ],
@@ -852,7 +852,7 @@ class _ScheduleSidePanel extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                '${selectedEvents.length} ' + context.l10n.byValue(selectedEvents.length == 1 ? 'scheduled item is mapped to this day' : 'scheduled items are mapped to this day') + '.',
+                '${selectedEvents.length} ${context.l10n.byValue(selectedEvents.length == 1 ? 'scheduled item is mapped to this day' : 'scheduled items are mapped to this day')}.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -884,7 +884,7 @@ class _ScheduleSidePanel extends StatelessWidget {
               ),
             ),
             Text(
-              '${selectedEvents.length} ' + context.l10n.byValue(selectedEvents.length == 1 ? 'item' : 'items'),
+              '${selectedEvents.length} ${context.l10n.byValue(selectedEvents.length == 1 ? 'item' : 'items')}',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -946,12 +946,9 @@ class _ScheduleSidePanel extends StatelessWidget {
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
-                    '${conflictEvents.length} ' +
-                        context.l10n.byValue(conflictEvents.length == 1
+                    '${conflictEvents.length} ${context.l10n.byValue(conflictEvents.length == 1
                             ? 'timetable conflict item requires review'
-                            : 'timetable conflict items require review') +
-                        ' ' +
-                        context.l10n.byValue('for this day.'),
+                            : 'timetable conflict items require review')} ${context.l10n.byValue('for this day.')}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppColors.danger,
                       fontWeight: FontWeight.w700,

@@ -34,7 +34,7 @@ class DepartmentBulkActionBar extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           Text(
-            '$count ' + context.l10n.byValue('selected'),
+            '$count ${context.l10n.byValue('selected')}',
             style: Theme.of(context).textTheme.titleSmall,
           ),
           PremiumButton(

@@ -62,11 +62,11 @@ class PermissionsMatrixScreen extends StatelessWidget {
                     ],
                   ),
                   StatusBadge(
-                    '${roles.length} ' + context.l10n.byValue(roles.length == 1 ? 'role' : 'roles'),
+                    '${roles.length} ${context.l10n.byValue(roles.length == 1 ? 'role' : 'roles')}',
                     icon: Icons.admin_panel_settings_rounded,
                   ),
                   StatusBadge(
-                    '${permissions.length} ' + context.l10n.byValue(permissions.length == 1 ? 'permission' : 'permissions'),
+                    '${permissions.length} ${context.l10n.byValue(permissions.length == 1 ? 'permission' : 'permissions')}',
                     icon: Icons.grid_view_rounded,
                   ),
                   if (isCompact)

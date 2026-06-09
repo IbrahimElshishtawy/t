@@ -422,17 +422,17 @@ class _InsightCard extends StatelessWidget {
           _InsightItem(
             title: context.l10n.byValue('Operational signal'),
             body:
-                '${summary.activeDepartmentsCount}/${summary.departmentsCount} ' + context.l10n.byValue('departments are currently active.'),
+                '${summary.activeDepartmentsCount}/${summary.departmentsCount} ${context.l10n.byValue('departments are currently active.')}',
           ),
           _InsightItem(
             title: context.l10n.byValue('Student density'),
             body:
-                '${formatCompactNumber(summary.studentsCount)} ' + context.l10n.byValue('students are currently distributed across the department surface.'),
+                '${formatCompactNumber(summary.studentsCount)} ${context.l10n.byValue('students are currently distributed across the department surface.')}',
           ),
           _InsightItem(
             title: context.l10n.byValue('Course load'),
             body:
-                '${summary.activeCoursesCount} ' + context.l10n.byValue('live offerings are linked to active departments right now.'),
+                '${summary.activeCoursesCount} ${context.l10n.byValue('live offerings are linked to active departments right now.')}',
           ),
         ],
       ),

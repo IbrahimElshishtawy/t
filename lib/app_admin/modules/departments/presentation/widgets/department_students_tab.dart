@@ -50,7 +50,7 @@ class DepartmentStudentsTab extends StatelessWidget {
                   DepartmentStatusPill(label: student.status),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    context.l10n.byValue('GPA') + ' ${student.gpa.toStringAsFixed(2)}',
+                    '${context.l10n.byValue('GPA')} ${student.gpa.toStringAsFixed(2)}',
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],

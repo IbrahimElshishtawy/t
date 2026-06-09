@@ -126,7 +126,7 @@ class _RoleCardState extends State<RoleCard> {
                   ),
                   _MetricPill(
                     icon: Icons.grid_view_rounded,
-                    label: '${widget.permissionCount} ' + context.l10n.byValue(widget.permissionCount == 1 ? 'permission' : 'permissions'),
+                    label: '${widget.permissionCount} ${context.l10n.byValue(widget.permissionCount == 1 ? 'permission' : 'permissions')}',
                   ),
                 ],
               ),

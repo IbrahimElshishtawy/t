@@ -56,7 +56,7 @@ class DepartmentsTableCard extends StatelessWidget {
             subtitle:
                 'Compact operations grid with sticky headers, role-aware actions, and instant density insight.',
             trailing: Text(
-              '${departments.length} ' + context.l10n.byValue('visible'),
+              '${departments.length} ${context.l10n.byValue('visible')}',
               style: Theme.of(context).textTheme.labelMedium,
             ),
           ),

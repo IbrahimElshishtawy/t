@@ -62,9 +62,9 @@ class DepartmentSubjectsTab extends StatelessWidget {
                   _InfoPill(label: context.l10n.byValue(subject.semesterLabel)),
                   _InfoPill(
                     label:
-                        '${formatCompactNumber(subject.enrolledStudents)} ' + context.l10n.byValue('students'),
+                        '${formatCompactNumber(subject.enrolledStudents)} ${context.l10n.byValue('students')}',
                   ),
-                  _InfoPill(label: '${subject.weeklyHours}h ' + context.l10n.byValue('weekly')),
+                  _InfoPill(label: '${subject.weeklyHours}h ${context.l10n.byValue('weekly')}'),
                 ],
               ),
               if (subject.overloaded) ...[

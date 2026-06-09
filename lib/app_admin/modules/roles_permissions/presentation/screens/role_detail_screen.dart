@@ -124,7 +124,7 @@ class RoleDetailScreen extends StatelessWidget {
                     icon: Icons.people_alt_rounded,
                   ),
                   StatusBadge(
-                    '${role!.permissionIds.length} ' + context.l10n.byValue(role!.permissionIds.length == 1 ? 'permission' : 'permissions'),
+                    '${role!.permissionIds.length} ${context.l10n.byValue(role!.permissionIds.length == 1 ? 'permission' : 'permissions')}',
                     icon: Icons.grid_view_rounded,
                   ),
                   if (role!.isSystem)
@@ -477,7 +477,7 @@ class _RoleInsightStrip extends StatelessWidget {
         _RoleInsightCard(
           title: context.l10n.byValue('Members'),
           value: '${role.membersCount}',
-          caption: '$activeMembers ' + context.l10n.byValue('active in this role'),
+          caption: '$activeMembers ${context.l10n.byValue('active in this role')}',
           icon: Icons.people_alt_rounded,
           color: AppColors.primary,
         ),
@@ -485,7 +485,7 @@ class _RoleInsightStrip extends StatelessWidget {
           title: context.l10n.byValue('Permissions'),
           value: '${permissions.length}',
           caption:
-              '${permissions.where((item) => item.isCore).length} ' + context.l10n.byValue('core rules'),
+              '${permissions.where((item) => item.isCore).length} ${context.l10n.byValue('core rules')}',
           icon: Icons.verified_user_rounded,
           color: AppColors.info,
         ),

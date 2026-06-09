@@ -43,7 +43,7 @@ class DepartmentStaffTab extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          '${context.l10n.byValue(member.role)} • ${member.activeSubjects} ' + context.l10n.byValue('active subjects'),
+                          '${context.l10n.byValue(member.role)} • ${member.activeSubjects} ${context.l10n.byValue('active subjects')}',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
@@ -57,7 +57,7 @@ class DepartmentStaffTab extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      context.l10n.byValue('Utilization') + ' ${formatPercent(member.utilization)}',
+                      '${context.l10n.byValue('Utilization')} ${formatPercent(member.utilization)}',
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ),

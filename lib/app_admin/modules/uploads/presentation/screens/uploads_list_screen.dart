@@ -447,9 +447,7 @@ class _UploadsListScreenState extends State<UploadsListScreen> {
       title: context.l10n.byValue(ids.length == 1 ? 'Delete upload?' : 'Delete uploads?'),
       message: ids.length == 1
           ? context.l10n.byValue('This removes the selected file from the uploads workspace.')
-          : context.l10n.byValue('This removes') +
-              ' ${ids.length} ' +
-              context.l10n.byValue('selected files from the uploads workspace.'),
+          : '${context.l10n.byValue('This removes')} ${ids.length} ${context.l10n.byValue('selected files from the uploads workspace.')}',
     );
     if (!mounted) return;
     if (!confirmed) return;
@@ -788,7 +786,7 @@ class _BulkActionsBar extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              '$selectedCount ' + context.l10n.byValue(selectedCount == 1 ? 'upload selected' : 'uploads selected'),
+              '$selectedCount ${context.l10n.byValue(selectedCount == 1 ? 'upload selected' : 'uploads selected')}',
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -927,11 +925,7 @@ class _PaginationBar extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            context.l10n.byValue('Page') +
-                ' ${pagination.page} ' +
-                context.l10n.byValue('of') +
-                ' ${pagination.totalPages} | ${pagination.totalItems} ' +
-                context.l10n.byValue('total uploads'),
+            '${context.l10n.byValue('Page')} ${pagination.page} ${context.l10n.byValue('of')} ${pagination.totalPages} | ${pagination.totalItems} ${context.l10n.byValue('total uploads')}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ),
@@ -1117,10 +1111,7 @@ class _AssignmentSheetState extends State<_AssignmentSheet> {
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
-              context.l10n.byValue('Apply material, section, year, and access rules to') +
-                  ' ${widget.selectedCount} ' +
-                  context.l10n.byValue(widget.selectedCount == 1 ? 'selected upload' : 'selected uploads') +
-                  '.',
+              '${context.l10n.byValue('Apply material, section, year, and access rules to')} ${widget.selectedCount} ${context.l10n.byValue(widget.selectedCount == 1 ? 'selected upload' : 'selected uploads')}.',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: AppSpacing.lg),

@@ -30,7 +30,7 @@ class DepartmentOverviewTab extends StatelessWidget {
                 value: formatCompactNumber(department.studentsCount),
                 icon: Icons.school_rounded,
                 color: AppColors.primary,
-                footer: '${department.sectionsCount} ' + context.l10n.byValue('sections active'),
+                footer: '${department.sectionsCount} ${context.l10n.byValue('sections active')}',
               ),
             ),
             SizedBox(
@@ -40,7 +40,7 @@ class DepartmentOverviewTab extends StatelessWidget {
                 value: formatCompactNumber(department.staffCount),
                 icon: Icons.groups_rounded,
                 color: AppColors.secondary,
-                footer: '${department.activeCoursesCount} ' + context.l10n.byValue('live courses'),
+                footer: '${department.activeCoursesCount} ${context.l10n.byValue('live courses')}',
               ),
             ),
             SizedBox(
@@ -50,7 +50,7 @@ class DepartmentOverviewTab extends StatelessWidget {
                 value: formatCompactNumber(department.subjectsCount),
                 icon: Icons.auto_stories_rounded,
                 color: AppColors.info,
-                footer: '${department.years.length} ' + context.l10n.byValue('academic years'),
+                footer: '${department.years.length} ${context.l10n.byValue('academic years')}',
               ),
             ),
             SizedBox(
@@ -61,7 +61,7 @@ class DepartmentOverviewTab extends StatelessWidget {
                 icon: Icons.trending_up_rounded,
                 color: AppColors.warning,
                 footer:
-                    context.l10n.byValue('Updated') + ' ${department.updatedAt.day}/${department.updatedAt.month}',
+                    '${context.l10n.byValue('Updated')} ${department.updatedAt.day}/${department.updatedAt.month}',
               ),
             ),
           ],
@@ -267,14 +267,14 @@ class _YearsPlanCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${years[index].sectionsCount} ' + context.l10n.byValue('sections'),
+                        '${years[index].sectionsCount} ${context.l10n.byValue('sections')}',
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    '${formatCompactNumber(years[index].studentsCount)} ' + context.l10n.byValue('students'),
+                    '${formatCompactNumber(years[index].studentsCount)} ${context.l10n.byValue('students')}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: AppSpacing.sm),

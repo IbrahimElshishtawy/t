@@ -106,7 +106,7 @@ class _PermissionModuleSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         StatusBadge(
-                          '${permissions.length} ' + context.l10n.byValue(permissions.length == 1 ? 'permission' : 'permissions'),
+                          '${permissions.length} ${context.l10n.byValue(permissions.length == 1 ? 'permission' : 'permissions')}',
                           icon: Icons.tune_rounded,
                         ),
                         const SizedBox(height: AppSpacing.sm),
@@ -125,7 +125,7 @@ class _PermissionModuleSection extends StatelessWidget {
                           ),
                         ),
                         StatusBadge(
-                          '${permissions.length} ' + context.l10n.byValue(permissions.length == 1 ? 'permission' : 'permissions'),
+                          '${permissions.length} ${context.l10n.byValue(permissions.length == 1 ? 'permission' : 'permissions')}',
                           icon: Icons.tune_rounded,
                         ),
                       ],

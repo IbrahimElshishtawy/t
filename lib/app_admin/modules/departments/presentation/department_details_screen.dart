@@ -179,7 +179,7 @@ class _DepartmentDetailsBody extends StatelessWidget {
                         ),
                         const SizedBox(height: AppSpacing.xs),
                         Text(
-                          '${department.code} • ' + context.l10n.byValue('Led by') + ' ${department.headName}',
+                          '${department.code} • ${context.l10n.byValue('Led by')} ${department.headName}',
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(
                                 color: Colors.white.withValues(alpha: 0.86),

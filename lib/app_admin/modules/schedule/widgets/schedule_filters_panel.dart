@@ -132,19 +132,19 @@ class ScheduleFiltersPanel extends StatelessWidget {
             runSpacing: AppSpacing.sm,
             children: [
               _QuickCountChip(
-                label: '${lookups.departments.length} ' + context.l10n.byValue('departments'),
+                label: '${lookups.departments.length} ${context.l10n.byValue('departments')}',
                 accent: AppColors.primary,
               ),
               _QuickCountChip(
-                label: '${lookups.subjects.length} ' + context.l10n.byValue('subjects'),
+                label: '${lookups.subjects.length} ${context.l10n.byValue('subjects')}',
                 accent: AppColors.info,
               ),
               _QuickCountChip(
-                label: '${lookups.sections.length} ' + context.l10n.byValue('sections'),
+                label: '${lookups.sections.length} ${context.l10n.byValue('sections')}',
                 accent: AppColors.secondary,
               ),
               _QuickCountChip(
-                label: '${lookups.instructors.length} ' + context.l10n.byValue('instructors'),
+                label: '${lookups.instructors.length} ${context.l10n.byValue('instructors')}',
                 accent: AppColors.warning,
               ),
             ],
@@ -471,5 +471,5 @@ void _addLookupLabel(
       break;
     }
   }
-  labels.add(l10n.byValue(prefix) + ': ' + l10n.byValue(match?.label ?? value));
+  labels.add('${l10n.byValue(prefix)}: ${l10n.byValue(match?.label ?? value)}');
 }

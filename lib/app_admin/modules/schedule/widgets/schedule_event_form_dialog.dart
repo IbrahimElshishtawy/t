@@ -197,7 +197,6 @@ class _ScheduleEventFormDialogState extends State<ScheduleEventFormDialog> {
                               _buildStaffAssignment(context),
                               const SizedBox(height: AppSpacing.lg),
                               AppTextField(
-                                love: null,
                                 controller: _noteController,
                                 label: context.l10n.byValue('Notes'),
                                 hint:
