@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../app/localization/app_localizations.dart';
+import '../../../../../app/localization/app_localizations.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';

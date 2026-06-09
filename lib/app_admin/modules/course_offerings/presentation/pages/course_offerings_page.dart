@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:go_router/go_router.dart';
 import 'package:redux/redux.dart';
 
+import '../../../../app/localization/app_localizations.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/responsive/app_breakpoints.dart';
 import '../../../../core/routing/route_paths.dart';
@@ -39,7 +40,7 @@ class CourseOfferingsPage extends StatelessWidget {
             context.mounted) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text(current.feedbackMessage!)));
+          ).showSnackBar(SnackBar(content: Text(context.l10n.byValue(current.feedbackMessage!))));
           StoreProvider.of<AppState>(
             context,
           ).dispatch(const ResetCourseOfferingFeedbackAction());
@@ -64,13 +65,15 @@ class CourseOfferingsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     PageHeader(
-                      title: 'Course Offerings',
-                      subtitle:
-                          'Manage the live academic delivery layer across subjects, staff, sections, and capacity planning.',
-                      breadcrumbs: const ['Admin', 'Academic'],
+                      title: context.l10n.byValue('Course Offerings'),
+                      subtitle: context.l10n.byValue(
+                          'Manage the live academic delivery layer across subjects, staff, sections, and capacity planning.'),
+                      breadcrumbs: const ['Admin', 'Academic']
+                          .map((b) => context.l10n.byValue(b))
+                          .toList(),
                       actions: [
                         PremiumButton(
-                          label: 'New offering',
+                          label: context.l10n.byValue('New offering'),
                           icon: Icons.add_rounded,
                           onPressed: () => OfferingForm.show(context),
                         ),
@@ -82,23 +85,23 @@ class CourseOfferingsPage extends StatelessWidget {
                       runSpacing: AppSpacing.md,
                       children: [
                         OfferingSummaryCard(
-                          label: 'Filtered offerings',
+                          label: context.l10n.byValue('Filtered offerings'),
                           value: '${vm.metrics.total}',
                           accent: AppColors.primary,
                         ),
                         OfferingSummaryCard(
-                          label: 'Active offerings',
+                          label: context.l10n.byValue('Active offerings'),
                           value: '${vm.metrics.active}',
                           accent: AppColors.secondary,
                         ),
                         OfferingSummaryCard(
-                          label: 'Average fill rate',
+                          label: context.l10n.byValue('Average fill rate'),
                           value:
                               '${(vm.metrics.averageFillRate * 100).round()}%',
                           accent: AppColors.warning,
                         ),
                         OfferingSummaryCard(
-                          label: 'Seats remaining',
+                          label: context.l10n.byValue('Seats remaining'),
                           value: '${vm.metrics.totalSeatsRemaining}',
                           accent: AppColors.info,
                         ),
@@ -157,80 +160,80 @@ class CourseOfferingsPage extends StatelessWidget {
                         isEmpty:
                             vm.filteredCount == 0 &&
                             vm.status == LoadStatus.success,
-                        emptyTitle: 'No offerings match the current view',
-                        emptySubtitle:
-                            'Adjust your search or filters to reveal more course offerings.',
+                        emptyTitle: context.l10n.byValue('No offerings match the current view'),
+                        emptySubtitle: context.l10n.byValue(
+                            'Adjust your search or filters to reveal more course offerings.'),
                         child: Column(
                           children: [
                             Expanded(
                               child: switch (AppBreakpoints.resolve(context)) {
                                 DeviceScreenType.desktop => OfferingTable(
-                                  offerings: vm.visibleOfferings,
-                                  onView: (item) => context.push(
-                                    RoutePaths.courseOfferingDetails(item.id),
+                                    offerings: vm.visibleOfferings,
+                                    onView: (item) => context.push(
+                                      RoutePaths.courseOfferingDetails(item.id),
+                                    ),
+                                    onEdit: (item) => OfferingForm.show(
+                                      context,
+                                      initialOffering: item,
+                                    ),
+                                    onDelete: (item) =>
+                                        _confirmDelete(context, vm.store, item),
                                   ),
-                                  onEdit: (item) => OfferingForm.show(
-                                    context,
-                                    initialOffering: item,
-                                  ),
-                                  onDelete: (item) =>
-                                      _confirmDelete(context, vm.store, item),
-                                ),
                                 DeviceScreenType.tablet => GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: AppSpacing.md,
-                                        mainAxisSpacing: AppSpacing.md,
-                                        childAspectRatio: 1.25,
-                                      ),
-                                  itemCount: vm.visibleOfferings.length,
-                                  itemBuilder: (context, index) {
-                                    final item = vm.visibleOfferings[index];
-                                    return OfferingCard(
-                                      offering: item,
-                                      onView: () => context.push(
-                                        RoutePaths.courseOfferingDetails(
-                                          item.id,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: AppSpacing.md,
+                                          mainAxisSpacing: AppSpacing.md,
+                                          childAspectRatio: 1.25,
                                         ),
-                                      ),
-                                      onEdit: () => OfferingForm.show(
-                                        context,
-                                        initialOffering: item,
-                                      ),
-                                      onDelete: () => _confirmDelete(
-                                        context,
-                                        vm.store,
-                                        item,
-                                      ),
-                                    );
-                                  },
-                                ),
+                                    itemCount: vm.visibleOfferings.length,
+                                    itemBuilder: (context, index) {
+                                      final item = vm.visibleOfferings[index];
+                                      return OfferingCard(
+                                        offering: item,
+                                        onView: () => context.push(
+                                          RoutePaths.courseOfferingDetails(
+                                            item.id,
+                                          ),
+                                        ),
+                                        onEdit: () => OfferingForm.show(
+                                          context,
+                                          initialOffering: item,
+                                        ),
+                                        onDelete: () => _confirmDelete(
+                                          context,
+                                          vm.store,
+                                          item,
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 DeviceScreenType.mobile => ListView.separated(
-                                  itemCount: vm.visibleOfferings.length,
-                                  separatorBuilder: (_, index) =>
-                                      const SizedBox(height: AppSpacing.md),
-                                  itemBuilder: (context, index) {
-                                    final item = vm.visibleOfferings[index];
-                                    return OfferingCard(
-                                      offering: item,
-                                      onView: () => context.push(
-                                        RoutePaths.courseOfferingDetails(
-                                          item.id,
+                                    itemCount: vm.visibleOfferings.length,
+                                    separatorBuilder: (_, index) =>
+                                        const SizedBox(height: AppSpacing.md),
+                                    itemBuilder: (context, index) {
+                                      final item = vm.visibleOfferings[index];
+                                      return OfferingCard(
+                                        offering: item,
+                                        onView: () => context.push(
+                                          RoutePaths.courseOfferingDetails(
+                                            item.id,
+                                          ),
                                         ),
-                                      ),
-                                      onEdit: () => OfferingForm.show(
-                                        context,
-                                        initialOffering: item,
-                                      ),
-                                      onDelete: () => _confirmDelete(
-                                        context,
-                                        vm.store,
-                                        item,
-                                      ),
-                                    );
-                                  },
-                                ),
+                                        onEdit: () => OfferingForm.show(
+                                          context,
+                                          initialOffering: item,
+                                        ),
+                                        onDelete: () => _confirmDelete(
+                                          context,
+                                          vm.store,
+                                          item,
+                                        ),
+                                      );
+                                    },
+                                  ),
                               },
                             ),
                             const SizedBox(height: AppSpacing.sm),
@@ -240,8 +243,8 @@ class CourseOfferingsPage extends StatelessWidget {
                                 builder: (context, constraints) {
                                   final compact = constraints.maxWidth < 540;
                                   final summaryText = isMobile
-                                      ? 'Page ${vm.page}/${vm.totalPages}'
-                                      : 'Showing ${vm.visibleOfferings.length} of ${vm.filteredCount} offerings';
+                                      ? '${context.l10n.byValue('Page')} ${vm.page}/${vm.totalPages}'
+                                      : '${context.l10n.byValue('Showing')} ${vm.visibleOfferings.length} ${context.l10n.byValue('of')} ${vm.filteredCount} ${context.l10n.byValue('offerings')}';
 
                                   final pager = Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -266,7 +269,7 @@ class CourseOfferingsPage extends StatelessWidget {
                                             horizontal: AppSpacing.sm,
                                           ),
                                           child: Text(
-                                            'Page ${vm.page} / ${vm.totalPages}',
+                                            '${context.l10n.byValue('Page')} ${vm.page} / ${vm.totalPages}',
                                           ),
                                         ),
                                       IconButton(
@@ -345,9 +348,9 @@ class CourseOfferingsPage extends StatelessWidget {
   ) async {
     final confirmed = await AppConfirmDialog.show(
       context,
-      title: 'Delete offering',
+      title: context.l10n.byValue('Delete offering'),
       message:
-          'Delete ${offering.code} - ${offering.subjectName}? This removes the current admin snapshot.',
+          '${context.l10n.byValue('Delete')} ${offering.code} - ${context.l10n.byValue(offering.subjectName)}? ${context.l10n.byValue('This removes the current admin snapshot.')}',
     );
     if (!confirmed || !context.mounted) return;
     store.dispatch(DeleteCourseOfferingAction(offeringId: offering.id));

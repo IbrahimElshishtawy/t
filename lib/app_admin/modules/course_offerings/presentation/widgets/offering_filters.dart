@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../app/localization/app_localizations.dart';
+import '../../../../../app/localization/app_localizations.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../shared/widgets/premium_button.dart';

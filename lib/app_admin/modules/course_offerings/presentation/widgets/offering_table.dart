@@ -2,7 +2,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../app/localization/app_localizations.dart';
+import '../../../../../app/localization/app_localizations.dart';
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/spacing/app_spacing.dart';
