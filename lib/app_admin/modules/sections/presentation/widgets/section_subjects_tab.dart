@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/localization/app_localizations.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/responsive/app_breakpoints.dart';
@@ -29,11 +30,11 @@ class SectionSubjectsTab extends StatelessWidget {
         AppCard(
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: SectionPanelHeader(
-            title: 'Assigned subjects',
+            title: context.l10n.byValue('Assigned subjects'),
             subtitle:
-                'Subject ownership, lecture counts, and instructor alignment for this section.',
+                context.l10n.byValue('Subject ownership, lecture counts, and instructor alignment for this section.'),
             trailing: PremiumButton(
-              label: 'Assign subject',
+              label: context.l10n.byValue('Assign subject'),
               icon: Icons.playlist_add_rounded,
               onPressed: onAssignSubject,
             ),
@@ -53,7 +54,7 @@ class SectionSubjectsTab extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              '${subject.code} • ${subject.title}',
+                              '${subject.code} • ${context.l10n.byValue(subject.title)}',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ),
@@ -62,24 +63,24 @@ class SectionSubjectsTab extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       _MetricLine(
-                        label: 'Instructor',
-                        value: subject.instructorName,
+                        label: context.l10n.byValue('Instructor'),
+                        value: context.l10n.byValue(subject.instructorName),
                       ),
                       const SizedBox(height: AppSpacing.xs),
                       _MetricLine(
-                        label: 'Lectures',
+                        label: context.l10n.byValue('Lectures'),
                         value: subject.lecturesCount.toString(),
                       ),
                       const SizedBox(height: AppSpacing.xs),
                       _MetricLine(
-                        label: 'Delivery',
-                        value: subject.deliveryLabel,
+                        label: context.l10n.byValue('Delivery'),
+                        value: context.l10n.byValue(subject.deliveryLabel),
                       ),
                       const SizedBox(height: AppSpacing.md),
                       SectionCapacityBar(
                         value: subject.completionRate,
                         label:
-                            '${(subject.completionRate * 100).round()}% delivery completion',
+                            '${(subject.completionRate * 100).round()}% ${context.l10n.byValue('delivery completion')}',
                       ),
                     ],
                   ),
@@ -94,14 +95,14 @@ class SectionSubjectsTab extends StatelessWidget {
             padding: EdgeInsets.zero,
             child: Column(
               children: [
-                const _TableHeaderRow(
+                _TableHeaderRow(
                   columns: [
-                    _TableColumn(label: 'Subject', flex: 3),
-                    _TableColumn(label: 'Lectures', flex: 1),
-                    _TableColumn(label: 'Instructor', flex: 2),
-                    _TableColumn(label: 'Delivery', flex: 2),
-                    _TableColumn(label: 'Status', flex: 1),
-                    _TableColumn(label: 'Progress', flex: 2),
+                    _TableColumn(label: context.l10n.byValue('Subject'), flex: 3),
+                    _TableColumn(label: context.l10n.byValue('Lectures'), flex: 1),
+                    _TableColumn(label: context.l10n.byValue('Instructor'), flex: 2),
+                    _TableColumn(label: context.l10n.byValue('Delivery'), flex: 2),
+                    _TableColumn(label: context.l10n.byValue('Status'), flex: 1),
+                    _TableColumn(label: context.l10n.byValue('Progress'), flex: 2),
                   ],
                 ),
                 for (final subject in subjects)
@@ -178,20 +179,20 @@ class _SubjectTableRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${subject.code} • ${subject.title}',
+                  '${subject.code} • ${context.l10n.byValue(subject.title)}',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  subject.deliveryLabel,
+                  context.l10n.byValue(subject.deliveryLabel),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),
           ),
           Expanded(flex: 1, child: Text(subject.lecturesCount.toString())),
-          Expanded(flex: 2, child: Text(subject.instructorName)),
-          Expanded(flex: 2, child: Text(subject.deliveryLabel)),
+          Expanded(flex: 2, child: Text(context.l10n.byValue(subject.instructorName))),
+          Expanded(flex: 2, child: Text(context.l10n.byValue(subject.deliveryLabel))),
           Expanded(flex: 1, child: StatusBadge(subject.status)),
           Expanded(
             flex: 2,

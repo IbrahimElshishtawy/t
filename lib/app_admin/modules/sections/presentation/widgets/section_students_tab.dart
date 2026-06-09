@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import '../../../../app/localization/app_localizations.dart';
+
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/spacing/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
@@ -79,9 +81,9 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SectionPanelHeader(
-                title: 'Students',
+                title: context.l10n.byValue('Students'),
                 subtitle:
-                    'Search, filter, bulk manage, and drag students across sections without losing visibility.',
+                    context.l10n.byValue('Search, filter, bulk manage, and drag students across sections without losing visibility.'),
                 trailing: PremiumButton(
                   label: 'Add student',
                   icon: Icons.person_add_alt_1_rounded,
@@ -113,7 +115,7 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
               ? null
               : () => setState(() => _studentPage = currentPage + 1),
           label:
-              'Showing ${visibleStudents.length} of ${filteredStudents.length} students in ${record.code}',
+              '${context.l10n.byValue('Showing')} ${visibleStudents.length} ${context.l10n.byValue('of')} ${filteredStudents.length} ${context.l10n.byValue('students')} ${context.l10n.byValue('in')} ${record.code}',
         ),
       ],
     );
@@ -141,16 +143,16 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
               _studentQuery = value;
               _studentPage = 0;
             }),
-            decoration: const InputDecoration(
-              hintText: 'Search by name, email, or student ID',
-              prefixIcon: Icon(Icons.search_rounded),
+            decoration: InputDecoration(
+              hintText: context.l10n.byValue('Search by name, email, or student ID'),
+              prefixIcon: const Icon(Icons.search_rounded),
             ),
           ),
         ),
         SizedBox(
           width: 170,
           child: _FilterDropdown(
-            label: 'Status',
+            label: context.l10n.byValue('Status'),
             value: _studentStatusFilter,
             items: const ['All', 'Active', 'Inactive'],
             onChanged: (value) => setState(() {
@@ -162,7 +164,7 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
         SizedBox(
           width: 170,
           child: _FilterDropdown(
-            label: 'Year',
+            label: context.l10n.byValue('Year'),
             value: _studentYearFilter,
             items: yearOptions,
             onChanged: (value) => setState(() {
@@ -174,7 +176,7 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
         SizedBox(
           width: 190,
           child: _FilterDropdown(
-            label: 'Department',
+            label: context.l10n.byValue('Department'),
             value: _studentDepartmentFilter,
             items: departmentOptions,
             onChanged: (value) => setState(() {
@@ -202,7 +204,7 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           Text(
-            '$selectedCount selected  •  $filteredCount matching current filters',
+            '$selectedCount ${context.l10n.byValue('selected')}  •  $filteredCount ${context.l10n.byValue('matching current filters')}',
             style: const TextStyle(fontWeight: FontWeight.w700),
           ),
           PremiumButton(
@@ -232,12 +234,12 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Drag and drop assignment',
+          context.l10n.byValue('Drag and drop assignment'),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: AppSpacing.xs),
         Text(
-          'Drag roster cards into another cohort to simulate fast transfer decisions.',
+          context.l10n.byValue('Drag roster cards into another cohort to simulate fast transfer decisions.'),
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.md),
@@ -305,14 +307,14 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
                           ),
                           const SizedBox(height: AppSpacing.xs),
                           Text(
-                            '${target.department} • ${target.yearLabel}',
+                            '${context.l10n.byValue(target.department)} • ${context.l10n.byValue(target.yearLabel)}',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                           const SizedBox(height: AppSpacing.md),
                           SectionCapacityBar(
                             value: target.capacityUsage,
                             label:
-                                '${target.studentsCount}/${target.capacity} seats',
+                                '${target.studentsCount}/${target.capacity} ${context.l10n.byValue('seats')}',
                           ),
                         ],
                       ),
@@ -331,15 +333,15 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
       padding: EdgeInsets.zero,
       child: Column(
         children: [
-          const _TableHeaderRow(
+          _TableHeaderRow(
             columns: [
-              _TableColumn(label: 'Student', flex: 3),
-              _TableColumn(label: 'Status', flex: 2),
-              _TableColumn(label: 'Year', flex: 1),
-              _TableColumn(label: 'Department', flex: 2),
-              _TableColumn(label: 'GPA', flex: 1),
-              _TableColumn(label: 'Attendance', flex: 2),
-              _TableColumn(label: 'Selection', flex: 1),
+              _TableColumn(label: context.l10n.byValue('Student'), flex: 3),
+              _TableColumn(label: context.l10n.byValue('Status'), flex: 2),
+              _TableColumn(label: context.l10n.byValue('Year'), flex: 1),
+              _TableColumn(label: context.l10n.byValue('Department'), flex: 2),
+              _TableColumn(label: context.l10n.byValue('GPA'), flex: 1),
+              _TableColumn(label: context.l10n.byValue('Attendance'), flex: 2),
+              _TableColumn(label: context.l10n.byValue('Selection'), flex: 1),
             ],
           ),
           for (final student in students)
@@ -413,18 +415,18 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _MetricLine(
-                  label: 'GPA',
+                  label: context.l10n.byValue('GPA'),
                   value: student.gpa.toStringAsFixed(2),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 _MetricLine(
-                  label: 'Attendance',
+                  label: context.l10n.byValue('Attendance'),
                   value: formatPercentValue(student.attendanceRate),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 _MetricLine(
-                  label: 'Last activity',
-                  value: student.lastActivityLabel,
+                  label: context.l10n.byValue('Last activity'),
+                  value: context.l10n.byValue(student.lastActivityLabel),
                 ),
               ],
             ),
@@ -484,12 +486,12 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Move selected students',
+                context.l10n.byValue('Move selected students'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Choose the target section for the current selection.',
+                context.l10n.byValue('Choose the target section for the current selection.'),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -497,7 +499,7 @@ class _SectionStudentsTabState extends State<SectionStudentsTab> {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(target.code),
-                  subtitle: Text('${target.department} • ${target.yearLabel}'),
+                  subtitle: Text('${context.l10n.byValue(target.department)} • ${context.l10n.byValue(target.yearLabel)}'),
                   trailing: Text(
                     '${target.studentsCount}/${target.capacity}',
                     style: Theme.of(context).textTheme.labelMedium,
@@ -584,14 +586,14 @@ class _FilterDropdown extends StatelessWidget {
         for (final item in items)
           Align(
             alignment: Alignment.centerLeft,
-            child: Text(item, maxLines: 1, overflow: TextOverflow.ellipsis),
+            child: Text(context.l10n.byValue(item), maxLines: 1, overflow: TextOverflow.ellipsis),
           ),
       ],
       items: [
         for (final item in items)
           DropdownMenuItem(
             value: item,
-            child: Text(item, maxLines: 1, overflow: TextOverflow.ellipsis),
+            child: Text(context.l10n.byValue(item), maxLines: 1, overflow: TextOverflow.ellipsis),
           ),
       ],
       onChanged: (selected) {
@@ -739,8 +741,8 @@ class _StudentTableRow extends StatelessWidget {
             ),
           ),
           Expanded(flex: 2, child: StatusBadge(student.status)),
-          Expanded(flex: 1, child: Text(student.yearLabel)),
-          Expanded(flex: 2, child: Text(student.department)),
+          Expanded(flex: 1, child: Text(context.l10n.byValue(student.yearLabel))),
+          Expanded(flex: 2, child: Text(context.l10n.byValue(student.department))),
           Expanded(flex: 1, child: Text(student.gpa.toStringAsFixed(2))),
           Expanded(
             flex: 2,
