@@ -26,7 +26,7 @@ class TodayFocusSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            focus.headline,
+            context.l10n.byValue(focus.headline),
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: tokens.textPrimary,
               fontWeight: FontWeight.w800,
@@ -49,7 +49,7 @@ class TodayFocusSection extends StatelessWidget {
             FilledButton.icon(
               onPressed: () => onOpenRoute(focus.primaryAction!.route),
               icon: const Icon(Icons.play_arrow_rounded),
-              label: Text(focus.primaryAction!.ctaLabel),
+              label: Text(context.l10n.byValue(focus.primaryAction!.ctaLabel)),
             ),
           ],
         ],

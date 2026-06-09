@@ -48,20 +48,20 @@ class StudentsAttentionSection extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            item.name,
+                            context.l10n.byValue(item.name),
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(color: tokens.textPrimary),
                           ),
                         ),
                         DashboardToneBadge(
-                          label: item.severity,
+                          label: context.l10n.byValue(item.severity),
                           tone: item.severity,
                         ),
                       ],
                     ),
                     const SizedBox(height: DashboardAppSpacing.xs),
                     Text(
-                      item.reason,
+                      context.l10n.byValue(item.reason),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: tokens.textSecondary,
                       ),
@@ -74,7 +74,7 @@ class StudentsAttentionSection extends StatelessWidget {
                         children: item.details
                             .map(
                               (detail) => DashboardToneBadge(
-                                label: detail,
+                                label: context.l10n.byValue(detail),
                                 tone: item.severity,
                               ),
                             )
@@ -83,7 +83,7 @@ class StudentsAttentionSection extends StatelessWidget {
                     ],
                     const SizedBox(height: DashboardAppSpacing.sm),
                     DashboardInlineAction(
-                      label: item.ctaLabel,
+                      label: context.l10n.byValue(item.ctaLabel),
                       onTap: () => onOpenRoute(item.route),
                     ),
                   ],

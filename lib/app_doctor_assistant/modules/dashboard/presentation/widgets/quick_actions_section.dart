@@ -60,13 +60,13 @@ class QuickActionsSection extends StatelessWidget {
                         ),
                         const SizedBox(height: DashboardAppSpacing.sm),
                         Text(
-                          action.label,
+                          context.l10n.byValue(action.label),
                           style: Theme.of(context).textTheme.titleMedium
                               ?.copyWith(color: tokens.textPrimary),
                         ),
                         const SizedBox(height: DashboardAppSpacing.xs),
                         Text(
-                          action.description,
+                          context.l10n.byValue(action.description),
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(color: tokens.textSecondary),
                         ),
