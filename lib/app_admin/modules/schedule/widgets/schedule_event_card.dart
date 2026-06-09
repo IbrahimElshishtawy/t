@@ -106,14 +106,14 @@ class _ScheduleEventCardState extends State<ScheduleEventCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.event.title,
+                              context.l10n.byValue(widget.event.title),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '${widget.event.subject} | ${widget.event.section}',
+                              '${context.l10n.byValue(widget.event.subject)} | ${context.l10n.byValue(widget.event.section)}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodySmall,
@@ -206,14 +206,14 @@ class _ScheduleEventCardState extends State<ScheduleEventCard> {
                       widget.event.note!.isNotEmpty) ...[
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      widget.event.note!,
+                      context.l10n.byValue(widget.event.note!),
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                   if (conflict) ...[
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      widget.conflictReasons.join(' | '),
+                      widget.conflictReasons.map((r) => context.l10n.byValue(r)).join(' | '),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.danger,
                         fontWeight: FontWeight.w700,
@@ -248,7 +248,7 @@ class _MetaRow extends StatelessWidget {
         const SizedBox(width: AppSpacing.xs),
         Expanded(
           child: Text(
-            label,
+            context.l10n.byValue(label),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall,
