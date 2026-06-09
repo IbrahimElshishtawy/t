@@ -204,8 +204,8 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
           padding: const EdgeInsets.all(AppSpacing.md),
           child: AdaptiveNavigationMenu(
             title: context.l10n.byValue('المزيد'),
-            subtitle:
-                'روابط إضافية وإعدادات الحساب بدون تزاحم شريط التنقل السفلي.',
+            subtitle: context.l10n.byValue(
+                'روابط إضافية وإعدادات الحساب بدون تزاحم شريط التنقل السفلي.'),
             items: widget.navigation.mobileMoreItems,
             location: widget.location,
             onSelected: (item) {
@@ -240,8 +240,8 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
             ),
             child: AdaptiveNavigationMenu(
               title: context.l10n.byValue('المزيد'),
-              subtitle:
-                  'التنقلات الثانوية تبقى هنا حتى يظل الشريط السفلي سريعًا وواضحًا.',
+              subtitle: context.l10n.byValue(
+                  'التنقلات الثانوية تبقى هنا حتى يظل الشريط السفلي سريعًا وواضحًا.'),
               items: widget.navigation.mobileMoreItems,
               location: widget.location,
               onSelected: (item) {

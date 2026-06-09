@@ -190,7 +190,19 @@
     "No duplicates detected in the import file.": "No duplicates detected in the import file.",
     "Duplicates:": "Duplicates:",
     "Import students": "Import students",
-    "rows detected in": "rows detected in"
+    "rows detected in": "rows detected in",
+    "المزيد": "More",
+    "الطلاب": "Students",
+    "المحاضرات": "Lectures",
+    "السكاشن": "Sections",
+    "الاختبارات": "Quizzes",
+    "التكليفات": "Tasks",
+    "النتائج": "Results",
+    "التنبيهات": "Alerts",
+    "الإعلانات": "Announcements",
+    "الإعدادات": "Settings",
+    "روابط إضافية وإعدادات الحساب بدون تزاحم شريط التنقل السفلي.": "Additional links and account settings without cluttering the bottom navigation bar.",
+    "التنقلات الثانوية تبقى هنا حتى يظل الشريط السفلي سريعًا وواضحًا.": "Secondary navigation items stay here to keep the bottom bar fast and clear."
   },
   "by_fragment": {
     " students": " students",
