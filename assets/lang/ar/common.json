@@ -574,7 +574,8 @@
     "No staff match these filters": "لا يوجد موظفون يطابقون هذه الفلاتر",
     "Adjust the search terms, role type, department, or monitoring scope to bring records back into view.": "اضبط شروط البحث، نوع الدور، القسم، أو نطاق المراقبة لإعادة عرض السجلات.",
     "Staff export UI is ready for API wiring. Connect this action to CSV or Excel generation when backend support lands.": "واجهة تصدير الموظفين جاهزة للربط بالخادم. اربط هذا الإجراء بإنشاء ملفات CSV أو Excel عند توفر دعم الخادم.",
-    "Permissions management": "إدارة الصلاحيات"
+    "Permissions management": "إدارة الصلاحيات",
+    "Reload module": "إعادة تحميل الوحدة"
   },
   "by_fragment": {
     " students": " طالب",
