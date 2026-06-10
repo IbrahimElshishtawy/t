@@ -125,6 +125,7 @@ class ResultsScreen extends StatelessWidget {
                 )
                 .toList(growable: false),
           ),
+        ),
       ],
     );
   }
