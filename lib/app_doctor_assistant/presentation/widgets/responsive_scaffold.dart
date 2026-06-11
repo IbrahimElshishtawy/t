@@ -122,6 +122,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
               ),
             ),
             SafeArea(
+              bottom: !isMobile,
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.sm),
                 child: Row(
@@ -213,6 +214,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
                   ],
                 ),
               ),
+            ),
             if (isMobile)
               Positioned(
                 left: 16,

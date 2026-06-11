@@ -26,7 +26,7 @@ class DoctorAssistantMobileBottomNav extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 20,
             spreadRadius: 1,
             offset: const Offset(0, 8),
@@ -40,10 +40,10 @@ class DoctorAssistantMobileBottomNav extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
-              color: theme.colorScheme.surface.withOpacity(0.85),
+              color: theme.colorScheme.surface.withValues(alpha: 0.85),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: theme.colorScheme.onSurface.withOpacity(0.08),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.08),
                 width: 1,
               ),
             ),
@@ -71,7 +71,7 @@ class DoctorAssistantMobileBottomNav extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? theme.colorScheme.primary.withOpacity(0.12)
+                                  ? theme.colorScheme.primary.withValues(alpha: 0.12)
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -79,7 +79,7 @@ class DoctorAssistantMobileBottomNav extends StatelessWidget {
                               item.icon,
                               color: isSelected
                                   ? theme.colorScheme.primary
-                                  : theme.colorScheme.onSurface.withOpacity(0.6),
+                                  : theme.colorScheme.onSurface.withValues(alpha: 0.6),
                               size: 22,
                             ),
                           ),
@@ -94,7 +94,7 @@ class DoctorAssistantMobileBottomNav extends StatelessWidget {
                                   isSelected ? FontWeight.bold : FontWeight.w500,
                               color: isSelected
                                   ? theme.colorScheme.primary
-                                  : theme.colorScheme.onSurface.withOpacity(0.8),
+                                  : theme.colorScheme.onSurface.withValues(alpha: 0.8),
                             ),
                           ),
                         ],

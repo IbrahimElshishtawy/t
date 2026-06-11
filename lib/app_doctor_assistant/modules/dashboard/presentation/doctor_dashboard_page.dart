@@ -45,33 +45,30 @@ class DoctorDashboardPage extends StatelessWidget {
       user: user,
       activeRoute: '/workspace/home',
       unreadNotifications: snapshot.notificationsPreview.unreadCount,
-      child: Container(
-        color: tokens.pageBackground,
-        child: RefreshIndicator(
-          onRefresh: () async {
-            vm.load(force: true);
-            await Future<void>.delayed(const Duration(milliseconds: 400));
-          },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(DashboardAppSpacing.xl),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final content = _DashboardContent(
-                  snapshot: snapshot,
-                  onToggleStyle: onToggleStyle,
-                  onRefresh: () => vm.load(force: true),
-                );
+      child: RefreshIndicator(
+        onRefresh: () async {
+          vm.load(force: true);
+          await Future<void>.delayed(const Duration(milliseconds: 400));
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(DashboardAppSpacing.xl),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final content = _DashboardContent(
+                snapshot: snapshot,
+                onToggleStyle: onToggleStyle,
+                onRefresh: () => vm.load(force: true),
+              );
 
-                if (constraints.maxWidth >= 1200) {
-                  return content.desktop(context);
-                }
-                if (constraints.maxWidth >= 760) {
-                  return content.tablet(context);
-                }
-                return content.mobile(context);
-              },
-            ),
+              if (constraints.maxWidth >= 1200) {
+                return content.desktop(context);
+              }
+              if (constraints.maxWidth >= 760) {
+                return content.tablet(context);
+              }
+              return content.mobile(context);
+            },
           ),
         ),
       ),
