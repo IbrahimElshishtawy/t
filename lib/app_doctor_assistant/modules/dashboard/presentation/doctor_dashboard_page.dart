@@ -6,7 +6,6 @@ import '../../../core/models/session_user.dart';
 import '../../../presentation/widgets/doctor_assistant_shell.dart';
 import '../state/dashboard_view_model.dart';
 import 'theme/app_spacing.dart';
-import 'theme/dashboard_theme_tokens.dart';
 import 'widgets/action_center_section.dart';
 import 'widgets/course_health_section.dart';
 import 'widgets/group_activity_feed_section.dart';
@@ -39,7 +38,6 @@ class DoctorDashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final snapshot = vm.snapshot!;
-    final tokens = DashboardThemeTokens.of(context);
 
     return DoctorAssistantShell(
       user: user,
