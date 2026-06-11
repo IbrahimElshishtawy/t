@@ -225,7 +225,7 @@ class SubjectResultsPage extends StatelessWidget {
                   Text(context.l10n.byValue('Choose the grading category this sheet belongs to:')),
                   const SizedBox(height: AppSpacing.md),
                   DropdownButtonFormField<String>(
-                    value: selectedKey,
+                    initialValue: selectedKey,
                     items: categories
                         .map(
                           (cat) => DropdownMenuItem<String>(
@@ -282,12 +282,14 @@ class SubjectResultsPage extends StatelessWidget {
         fileBytes: bytes,
       ));
 
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${context.l10n.byValue('Uploading')} ${file.name}...'),
         ),
       );
     } catch (e) {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('${context.l10n.byValue('Failed to upload file')}: $e')),
       );
