@@ -205,7 +205,16 @@ class NotificationService {
       final uri = baseUri.replace(queryParameters: queryParameters);
 
       _socketChannel = WebSocketChannel.connect(uri);
-      await _socketChannel!.ready;
+      bool connected = true;
+      await _socketChannel!.ready.catchError((_) {
+        connected = false;
+      });
+      if (!connected) {
+        await _socketChannel?.sink.close();
+        _socketChannel = null;
+        _statusController.add(NotificationRealtimeStatus.polling);
+        return;
+      }
       _socketSubscription = _socketChannel!.stream.listen(
         (event) {
           final payload = _decodeSocketPayload(event);
