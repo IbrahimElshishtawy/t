@@ -45,7 +45,7 @@ class DashboardApiService {
     String? userId,
   }) async* {
     final url = AppConfig.dashboardSocketUrl.trim();
-    if (url.isEmpty) {
+    if (AppConfig.useMockData || url.isEmpty) {
       yield* _fallbackRealtimeSignals();
       return;
     }

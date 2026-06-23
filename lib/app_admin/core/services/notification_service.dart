@@ -190,7 +190,7 @@ class NotificationService {
 
   Future<void> _connectWebSocket({String? accessToken, String? userId}) async {
     final url = AppConfig.notificationSocketUrl.trim();
-    if (url.isEmpty) {
+    if (AppConfig.useMockData || url.isEmpty) {
       _statusController.add(NotificationRealtimeStatus.polling);
       return;
     }

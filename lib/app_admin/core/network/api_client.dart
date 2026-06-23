@@ -25,6 +25,16 @@ class ApiClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
+          if (AppConfig.useMockData) {
+            handler.reject(
+              DioException(
+                requestOptions: options,
+                error: 'Running in offline mock mode.',
+                type: DioExceptionType.connectionError,
+              ),
+            );
+            return;
+          }
           final token = await _secureStorage.readAccessToken();
           if (_hasUsableAccessToken(token)) {
             options.headers['Authorization'] = 'Bearer $token';
