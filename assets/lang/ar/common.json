@@ -23,6 +23,18 @@
     }
   },
   "by_value": {
+    "dashboard": "لوحة التحكم",
+    "students": "الطلاب",
+    "departments": "الأقسام",
+    "sections": "السكاشن",
+    "offerings": "الطرح الدراسي",
+    "enrollments": "التسجيلات",
+    "content": "المحتوى",
+    "uploads": "الملفات المرفوعة",
+    "notifications": "الإشعارات",
+    "moderation": "المراجعة",
+    "roles": "الأدوار",
+    "settings": "الإعدادات",
     "Dashboard": "لوحة التحكم",
     "Students": "الطلاب",
     "Staff": "الطاقم",
