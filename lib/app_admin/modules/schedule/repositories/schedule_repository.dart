@@ -35,10 +35,7 @@ class ScheduleRepository {
     );
   }
 
-  Future<ScheduleMutationResult> createEvent(
-    ScheduleEventUpsertPayload payload,
-  ) async {
-    _ensureSeeded();
+  ScheduleEventUpsertPayload _resolvePayloadMetadata(ScheduleEventUpsertPayload payload) {
     var department = payload.department;
     var yearLabel = payload.yearLabel;
     var section = payload.section;
@@ -47,12 +44,34 @@ class ScheduleRepository {
     var sectionId = payload.sectionId;
     var subjectId = payload.subjectId;
     var instructorId = payload.instructorId;
+    var courseOfferingId = payload.courseOfferingId;
 
-    if (payload.courseOfferingId != null && payload.courseOfferingId!.isNotEmpty) {
+    // 1. If subjectId is selected, resolve subject details
+    if (subjectId != null && subjectId.isNotEmpty) {
+      try {
+        final subRecord = _demoDataService.subjects().firstWhere((s) => s.id == subjectId);
+        if (subject == 'Subject' || subject.isEmpty) {
+          subject = subRecord.name;
+        }
+        if (department == 'Department' || department.isEmpty) {
+          department = subRecord.department;
+        }
+        if (yearLabel == 'Year' || yearLabel.isEmpty) {
+          yearLabel = subRecord.academicYear;
+        }
+      } catch (_) {}
+    }
+
+    // 2. If courseOfferingId is selected, resolve from cache
+    if (courseOfferingId != null && courseOfferingId.isNotEmpty) {
       for (final event in _cache ?? const <ScheduleEventItem>[]) {
-        if (event.courseOfferingId == payload.courseOfferingId) {
-          department = event.department;
-          yearLabel = event.yearLabel;
+        if (event.courseOfferingId == courseOfferingId || event.id == courseOfferingId) {
+          if (department == 'Department' || department.isEmpty) {
+            department = event.department;
+          }
+          if (yearLabel == 'Year' || yearLabel.isEmpty) {
+            yearLabel = event.yearLabel;
+          }
           if (section == 'Section' || section.isEmpty) {
             section = event.section;
             sectionId = event.sectionId;
@@ -70,23 +89,98 @@ class ScheduleRepository {
       }
     }
 
-    final local = payload.toEvent(
-      id: 'SCH-${DateTime.now().microsecondsSinceEpoch}',
-      isSynced: false,
-    ).copyWith(
-      department: department,
-      yearLabel: yearLabel,
+    // 3. If sectionId is selected, resolve section name
+    if (sectionId != null && sectionId.isNotEmpty) {
+      try {
+        final secRecord = _demoDataService.sections().firstWhere((s) => s.id == sectionId);
+        if (section == 'Section' || section.isEmpty) {
+          section = secRecord.name;
+        }
+        if (department == 'Department' || department.isEmpty) {
+          department = secRecord.department;
+        }
+      } catch (_) {}
+    }
+
+    // 4. If instructorId is selected, resolve instructor name
+    if (instructorId != null && instructorId.isNotEmpty) {
+      try {
+        final staffList = _demoDataService.staffDirectory();
+        final staffRec = staffList.firstWhere((s) => s.id == instructorId);
+        if (instructor == 'Instructor' || instructor.isEmpty) {
+          instructor = staffRec.fullName;
+        }
+      } catch (_) {
+        try {
+          final staffCompact = _demoDataService.staff().firstWhere((s) => s.id == instructorId);
+          if (instructor == 'Instructor' || instructor.isEmpty) {
+            instructor = staffCompact.name;
+          }
+        } catch (_) {}
+      }
+    }
+
+    // 5. Fallback lookups from lookup options if available
+    final lookups = _lookups;
+    if (lookups != null) {
+      if (subject == 'Subject' && subjectId != null) {
+        final match = lookups.subjects.firstWhere((opt) => opt.id == subjectId, orElse: () => const ScheduleOption(id: '', label: ''));
+        if (match.label.isNotEmpty) subject = match.label;
+      }
+      if (section == 'Section' && sectionId != null) {
+        final match = lookups.sections.firstWhere((opt) => opt.id == sectionId, orElse: () => const ScheduleOption(id: '', label: ''));
+        if (match.label.isNotEmpty) section = match.label;
+      }
+      if (instructor == 'Instructor' && instructorId != null) {
+        final match = lookups.instructors.firstWhere((opt) => opt.id == instructorId, orElse: () => const ScheduleOption(id: '', label: ''));
+        if (match.label.isNotEmpty) instructor = match.label;
+      }
+    }
+
+    // 6. Make sure department/year are not placeholders if there is any other subject
+    if (department == 'Department' && lookups != null && lookups.departments.isNotEmpty) {
+      department = lookups.departments.first.label;
+    }
+    if (yearLabel == 'Year' && lookups != null && lookups.years.isNotEmpty) {
+      yearLabel = lookups.years.first.label;
+    }
+
+    return ScheduleEventUpsertPayload(
+      title: payload.title,
       section: section,
       subject: subject,
       instructor: instructor,
+      location: payload.location,
+      status: payload.status,
+      type: payload.type,
+      startAt: payload.startAt,
+      endAt: payload.endAt,
+      department: department,
+      yearLabel: yearLabel,
+      note: payload.note,
+      courseOfferingId: courseOfferingId,
       sectionId: sectionId,
       subjectId: subjectId,
       instructorId: instructorId,
+      studentScopeLabel: payload.studentScopeLabel == 'Section cohort' ? '$section cohort' : payload.studentScopeLabel,
+      repeatRule: payload.repeatRule,
+      assignedStaffIds: payload.assignedStaffIds,
+    );
+  }
+
+  Future<ScheduleMutationResult> createEvent(
+    ScheduleEventUpsertPayload payload,
+  ) async {
+    _ensureSeeded();
+    final resolvedPayload = _resolvePayloadMetadata(payload);
+    final local = resolvedPayload.toEvent(
+      id: 'SCH-${DateTime.now().microsecondsSinceEpoch}',
+      isSynced: false,
     );
 
     if (!AppConfig.useMockData) {
       try {
-        final remote = await _api.createEvent(payload);
+        final remote = await _api.createEvent(resolvedPayload);
         _cache = [remote.copyWith(isSynced: true), ..._cache!];
       } catch (_) {
         _cache = [local, ..._cache!];
@@ -115,10 +209,11 @@ class ScheduleRepository {
           throw AppException('The selected schedule event was not found.'),
     );
 
-    final local = payload.toEvent(id: existing.id, isSynced: existing.isSynced);
+    final resolvedPayload = _resolvePayloadMetadata(payload);
+    final local = resolvedPayload.toEvent(id: existing.id, isSynced: existing.isSynced);
     if (!AppConfig.useMockData) {
       try {
-        final remote = await _api.updateEvent(eventId, payload);
+        final remote = await _api.updateEvent(eventId, resolvedPayload);
         _replace(remote.copyWith(isSynced: true));
       } catch (_) {
         _replace(local);
@@ -349,17 +444,27 @@ class ScheduleRepository {
   ScheduleLookupBundle _buildLookups(List<ScheduleEventItem> events) {
     final subjects = _demoDataService.subjects();
     final staffOptions = _buildStaffOptions(subjects);
+
+    final validDepartments = events
+        .map((e) => e.department.trim())
+        .where((d) => d.isNotEmpty && d != 'Department' && d != 'القسم');
+
+    final validYears = events
+        .map((e) => e.yearLabel.trim())
+        .where((y) => y.isNotEmpty && y != 'Year' && y != 'السنة الدراسية');
+
+    final validSections = events
+        .where((e) => e.section.isNotEmpty && e.section != 'Section' && e.section != 'السكشن');
+
     return ScheduleLookupBundle(
       departments: _distinctOptions(
-        events.map(
-          (event) =>
-              ScheduleOption(id: event.department, label: event.department),
+        validDepartments.map(
+          (dept) => ScheduleOption(id: dept, label: dept),
         ),
       ),
       years: _distinctOptions(
-        events.map(
-          (event) =>
-              ScheduleOption(id: event.yearLabel, label: event.yearLabel),
+        validYears.map(
+          (year) => ScheduleOption(id: year, label: year),
         ),
       ),
       subjects: _distinctOptions(
@@ -373,7 +478,7 @@ class ScheduleRepository {
       ),
       instructors: _distinctOptions(staffOptions),
       sections: _distinctOptions(
-        events.map(
+        validSections.map(
           (event) => ScheduleOption(
             id: event.sectionId ?? event.section,
             label: event.section,
@@ -382,7 +487,7 @@ class ScheduleRepository {
         ),
       ),
       offerings: _distinctOptions(
-        events.map(
+        validSections.map(
           (event) => ScheduleOption(
             id: event.courseOfferingId ?? event.id,
             label: '${event.subject} - ${event.section}',
