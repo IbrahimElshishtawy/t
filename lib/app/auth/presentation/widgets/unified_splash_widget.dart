@@ -248,7 +248,7 @@ class _UnifiedSplashWidgetState extends State<UnifiedSplashWidget>
                                 boxShadow: [
                                   BoxShadow(
                                     color: (isDark ? const Color(0xFF2563EB) : const Color(0xFF60A5FA))
-                                        .withOpacity(isDark ? 0.22 : 0.16),
+                                        .withValues(alpha: isDark ? 0.22 : 0.16),
                                     blurRadius: 44,
                                     spreadRadius: 8,
                                   ),
@@ -345,13 +345,13 @@ class _UnifiedSplashWidgetState extends State<UnifiedSplashWidget>
                             height: 5,
                             decoration: BoxDecoration(
                               color: isDark
-                                  ? Colors.white.withOpacity(0.06)
-                                  : Colors.black.withOpacity(0.05),
+                                  ? Colors.white.withValues(alpha: 0.06)
+                                  : Colors.black.withValues(alpha: 0.05),
                               borderRadius: BorderRadius.circular(3),
                               border: Border.all(
                                 color: isDark
-                                    ? Colors.white.withOpacity(0.08)
-                                    : Colors.black.withOpacity(0.04),
+                                    ? Colors.white.withValues(alpha: 0.08)
+                                    : Colors.black.withValues(alpha: 0.04),
                                 width: 0.5,
                               ),
                             ),
@@ -520,7 +520,7 @@ class _ParticlePainter extends CustomPainter {
         edgeFade = (1.0 - yCurrent) / 0.15;
       }
 
-      paint.color = particleColor.withOpacity(p.opacity * edgeFade);
+      paint.color = particleColor.withValues(alpha: p.opacity * edgeFade);
       canvas.drawCircle(Offset(dx, dy), p.size, paint);
     }
   }
