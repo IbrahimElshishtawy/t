@@ -120,11 +120,14 @@ class _UnifiedSplashWidgetState extends State<UnifiedSplashWidget>
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    Widget logo = Image.asset(
-      'assets/icons/iconapp.png',
-      width: 130,
-      height: 130,
-      fit: BoxFit.contain,
+    Widget logo = ClipRRect(
+      borderRadius: BorderRadius.circular(28),
+      child: Image.asset(
+        'assets/icons/iconapp.png',
+        width: 130,
+        height: 130,
+        fit: BoxFit.contain,
+      ),
     );
 
     // Apply combined entry animations + continuous floating (bobbing/swaying) effects
